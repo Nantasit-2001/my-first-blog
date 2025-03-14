@@ -1,3 +1,4 @@
+import PersonCat from "../assets/image/Person-cat.png";
 
 function HeroSection () {
     return(
@@ -15,7 +16,7 @@ function HeroSection () {
                           sm:text-end 
                           '>Discover a World of Knowledge at Your Fingertips. Your Daily Dose of Inspiration and Information.</p>
           </div>
-          <img className='h-auto sm:w-[30%]' src="./public/img/People_cat.png" alt="Person and cat" />
+          <img className='h-auto sm:w-[30%]' src={PersonCat}/>
           <div className='sm:w-[35%] sm:h-[284px]
                           lg:w-[28%]'>
               <h6 className='text-[12px] text-[#75716B]'>-Author</h6>

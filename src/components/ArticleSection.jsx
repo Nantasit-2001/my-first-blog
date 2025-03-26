@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import BlogCard from "./BlogCard";
 import blogPosts from "@/Data/blogPosts";
+import axios, { Axios } from "axios";
+
 
 import { Input } from "./ui/input"
 import { Search } from 'lucide-react';
@@ -16,12 +18,33 @@ import {Select,
     SelectTrigger,
     SelectValue,} from './ui/select';
 
-
+    
     
 function ArticleSection (){
   const categories = ["Highlight", "Cat", "Inspiration", "General"];
   const [selectedCategory,setSelectedCategory] = useState(categories[0])
-    return(
+  const [dataBlogPost,setDataBlogPost] = useState([])
+  // const [page, setPage] = useState(1);
+  // const [hasMore, setHasMore] = useState(true);
+  
+  // useEffect(() => {fetchPosts();}, [page, selectedCategory]);
+
+  // const handleLoadMore = () => {
+  //   setPage((prevPage) => prevPage + 1); // เพิ่มหมายเลขหน้าเพื่อโหลดข้อมูลเพิ่ม
+  // };
+  
+  useEffect(()=>{getDataBlogPost()},[selectedCategory])
+  // useEffect(() => {fetchPosts()}, [page,category]);
+
+  async function getDataBlogPost(){
+  try{
+    const tempParams = (selectedCategory === "Highlight")?"":selectedCategory
+    const temp = await axios.get(`https://blog-post-project-api.vercel.app/posts/?category=${tempParams}`);
+      setDataBlogPost(temp.data.posts);
+  }
+  catch(error){console.log("dataBlogePost!!_ "+error)}}
+  
+  return(
     <>
     <section className='w-full mt-4 mx-auto lg:max-w-300
                         sm:w-[80%] '>
@@ -74,16 +97,25 @@ function ArticleSection (){
 
           <div className="mt-6 px-4 grid grid-cols-1 gap-12
                           sm:mt-12 sm:px-0 sm:grid-cols-2 ">
-            {blogPosts.map((blogPost)=>
+
+            {dataBlogPost.map((blogPost)=>
               <BlogCard key={blogPost.id}
                         image={blogPost.image}
                         category={blogPost.category}
                         title={blogPost.title}
                         description={blogPost.description}
                         author={blogPost.author}
-                        date={blogPost.date}/>
+                        date={new Date(blogPost.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+  />
             )}
           </div>
+    {/* {hasMore && (
+        <div className="text-center mt-8">
+          <button className="hover:text-muted-foreground font-medium underline">
+              View more
+          </button>
+        </div>
+  )} */}
 
     </section>
     </>

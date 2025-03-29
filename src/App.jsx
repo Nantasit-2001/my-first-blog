@@ -1,21 +1,23 @@
-import { useState } from 'react'
+
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import NavBar from './components/NavBar'
-import HeroSection from './components/HeroSection'
-import Footer from './components/Footer'
-import ArticleSection from './components/ArticleSection'
-
+import { Toaster } from "@/components/ui/sonner"
+import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import HomePage from './page/HomePage'
+import ViewPostPage from './page/ViewPostPage';
+import NotFoundPage from './page/NotFoundPage'
 function App() {
   return (
     <>
-    <section>
-      <NavBar/>
-      <HeroSection/>
-      <ArticleSection/>
-      <Footer/>
-    </section>  
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<HomePage/>} />
+        <Route path="/post/:postId" element={<ViewPostPage/>} />
+        <Route path="*" element={<NotFoundPage/>} />
+      </Routes>
+    </BrowserRouter>  
+    <Toaster />
     </>
   )
 }

@@ -5,10 +5,15 @@ import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import { Toaster, toast } from 'sonner'
 
-
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-
+import {
+    AlertDialog,
+    AlertDialogContent,
+    AlertDialogTitle,
+    AlertDialogDescription,
+    AlertDialogCancel,
+  } from "@/components/ui/alert-dialog";
 
 import {Linkedin,Facebook,Twitter,Copy,Smile,X} from "lucide-react";
 
@@ -18,7 +23,7 @@ function ViewPostPage() {
     const param = useParams();
     const [content, setContent] = useState({});
     const [loading, setLoading] = useState(true);
-
+    const [alertCreateAccountState,setAlertCreateAccountState]=useState(false);
     useEffect(() => {
         async function getPost() {
             try {
@@ -81,7 +86,6 @@ function ViewPostPage() {
                   console.error("คัดลอกข้อความไม่สำเร็จ", error);
                 });
         }      
-
         function ShareButtons({ articleUrl }) {
             const facebookShareUrl = `https://www.facebook.com/share.php?u=${encodeURIComponent(articleUrl)}`;
             const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}`;
@@ -101,7 +105,7 @@ function ViewPostPage() {
         return(
             <div className="bg-[#EFEEEB] py-4 px-4 md:rounded-sm flex flex-col space-y-4 md:gap-16 md:flex-row md:items-center md:space-y-0 md:justify-between mb-10">
                 <button className="bg-white flex items-center justify-center space-x-2 px-11 py-3 rounded-full text-foreground border border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors group group-hover:text-muted-foreground font-medium"
-                    onClick={()=>null}>
+                    onClick={()=>setAlertCreateAccountState(true)}>
                     <Smile strokeWidth={1.5} className="mr-2" />{likes}
                 </button>
                 
@@ -122,9 +126,11 @@ function ViewPostPage() {
             <section>
                 <div className="px-4 mb-4">
                     <h2 className="text-2xl text-gray-500 mb-2">Comment</h2>
-                    <textarea rows="3" placeholder="What are your thoughts?" className="border-2 rounded-lg w-full text-lg text-#75716B p-4 "></textarea>
+                    <textarea rows="3" placeholder="What are your thoughts?" className="border-2 rounded-lg w-full text-lg text-#75716B p-4"
+                    onClick={()=>setAlertCreateAccountState(true)}></textarea>
                     <div className="w-full flex sm:justify-end ">
-                        <button className=" border-2 bg-[#000000] text-lg py-4 px-12 mt-2 text-white font-semibold rounded-[50px] ">Send</button>
+                        <button className=" border-2 bg-[#000000] text-lg py-4 px-12 mt-2 text-white font-semibold rounded-[50px]"
+                        onClick={()=>setAlertCreateAccountState(true)}>Send</button>
                     </div>
                 </div>
             </section>
@@ -132,9 +138,36 @@ function ViewPostPage() {
         )
     }
 
+    function AlertCreateAccount({ alertCreateAccountState, setAlertCreateAccountState }) {
+  return (
+    <AlertDialog open={alertCreateAccountState} onOpenChange={setAlertCreateAccountState}>
+      <AlertDialogContent className="bg-white rounded-md pt-16 pb-6 max-w-[26rem] sm:max-w-lg flex flex-col items-center">
+        <AlertDialogTitle className="text-3xl font-semibold pb-2 text-center">
+          Create an account to continue
+        </AlertDialogTitle>
+        <button className="rounded-full text-white bg-foreground hover:bg-muted-foreground transition-colors py-4 text-lg w-52">
+          Create account
+        </button>
+        <AlertDialogDescription className="flex flex-row gap-1 justify-center font-medium text-center pt-2 text-muted-foreground">
+          Already have an account?
+          <a href="/login" className="text-foreground hover:text-muted-foreground transition-colors underline font-semibold">
+            Log in
+          </a>
+        </AlertDialogDescription>
+        <AlertDialogCancel onClick={() => setAlertCreateAccountState(false)} className="absolute right-4 top-2 sm:top-4 p-1 border-none">
+          <X className="h-6 w-6" />
+        </AlertDialogCancel>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
     return (
         <>
         <NavBar/>
+        <AlertCreateAccount alertCreateAccountState={alertCreateAccountState} 
+                                            setAlertCreateAccountState={setAlertCreateAccountState} />
+
         <div className="max-w-7xl mx-auto space-y-8 container md:px-8 pb-20 md:pb-28 md:pt-8 lg:pt-16">
             <div className="space-y-4 md:px-4">
                 <img src={content.image}alt={content.title}
@@ -168,6 +201,7 @@ function ViewPostPage() {
 
                     <div className="md:px-4">                                      
                         <LikeBar likes={content.likes}/>
+                        
                         <CommentBar/>
                     </div>
                 </div>    
@@ -176,7 +210,6 @@ function ViewPostPage() {
                         <AuthorInfo />
                     </div>
                 </div>
-
             </div>
         </div> 
         <Footer/>

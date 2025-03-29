@@ -4,7 +4,7 @@ import IconGoogle from "../assets/image/IconGoogle.png"
 function Footer (){
     return(
         <>
-        <section className="flex flex-col justify-center items-center gap-6 bg-[#EFEEEB] h-38  mt-50 
+        <section className="flex flex-col justify-center items-center gap-6 bg-[#EFEEEB] h-38  
                             sm:flex-row sm:justify-between sm:h-36 sm:px-30">
             <div className="flex flex-row justify-center gap-6 items-end">
                 <a className=" text-base  font-bold  text-[#43403B]">Get in touch</a>

@@ -28,47 +28,27 @@ function ArticleSection (){
   const [hasMore,setHasMore] = useState(true)
   const [isLoading,setIsLoading] = useState(false)
 
-  useEffect(()=>{getDataBlogPost()},[selectedCategory])
-  useEffect(()=>{(page>1)?moreDataBlogPost():undefined},[page])
+  useEffect(()=>{fetchPosts()},[selectedCategory,page])
 
-  async function getDataBlogPost(){
-  try{
+  async function fetchPosts(){
     setIsLoading(true);
-    const tempParams = (selectedCategory === "Highlight")?"":selectedCategory
-    const temp = await axios.get(`https://blog-post-project-api.vercel.app/posts/?category=${tempParams}`);
-      setDataBlogPost(temp.data.posts);
-      setHasMore(true)
-      setPage(1)
-  }
-  catch(error){console.log("dataBlogePost!!_ "+error)}
-  finally {
-    setIsLoading(false);
-  }}
-  
-  async function moreDataBlogPost(){
-    try{
-      const tempParams = (selectedCategory === "Highlight")?"":selectedCategory
-      const temp = await axios.get(`https://blog-post-project-api.vercel.app/posts`,
-        {
-          params: {
-            page: page,
-            limit: 6,
-            category: tempParams
-          }
-        }
-      );
-        setDataBlogPost((dataBlogPost)=>[...dataBlogPost,...temp.data.posts]);
-        temp.data.currentPage === temp.data.totalPages?setHasMore(false):undefined;
-    }
-    catch(error){console.log("dataBlogePost!!_ "+error)}
-    finally {
+    try {
+      const tempParams = selectedCategory === "Highlight" ? "" : selectedCategory;
+      const response = await axios.get("https://blog-post-project-api.vercel.app/posts", {
+        params: { page, limit: 6, category: tempParams }
+      });
+      setDataBlogPost(prevPosts => (page === 1 ? response.data.posts : [...prevPosts, ...response.data.posts]));
+      setHasMore(response.data.currentPage < response.data.totalPages);
+    } catch (error) {
+      console.error("Error fetching posts: ", error);
+    } finally {
       setIsLoading(false);
     }
   }
-
+  
   return(
     <>
-    <section className='w-full mt-4 mx-auto lg:max-w-300
+    <section className='w-full mt-4 mx-auto lg:max-w-300 mb-16
                         sm:w-[80%] '>
         <h2 className="text-3xl font-bold pb-2 px-8
                         sm:text-xl sm:px-0 lg:text-2xl
@@ -104,12 +84,13 @@ function ArticleSection (){
                 </Select>
             </div>
 
-            <div className="hidden sm:flex sm:justify-around text-gray-500
-                            lg:gap-6">
+            <div className="hidden sm:flex sm:justify-around text-gray-500 lg:gap-6">
                   {categories.map(categorie=>
                         <Button key={categorie} 
                                 variant="LatestArticles"
-                                onClick={()=>{setIsLoading(false);  setSelectedCategory(categorie); }}
+                                onClick={()=>{setSelectedCategory(categorie);
+                                              setPage(1);
+                                              setHasMore(true);}}
                                 className={selectedCategory === categorie?"bg-[#DAD6D1] text-accent-foreground ":null}  
                                 disabled={selectedCategory === categorie}
                                 >{categorie}
@@ -119,7 +100,7 @@ function ArticleSection (){
 
           <div className="mt-6 px-4 grid grid-cols-1 gap-12
                           sm:mt-12 sm:px-0 sm:grid-cols-2 ">
-            {dataBlogPost.map((blogPost)=>
+            {isLoading&&page===1?undefined:dataBlogPost.map((blogPost)=>
               <BlogCard key={blogPost.id}
                         id = {blogPost.id}
                         image={blogPost.image}
@@ -135,7 +116,8 @@ function ArticleSection (){
               <div className="text-center mt-8">
                 <button onClick={()=>setPage((page)=>page+1)}
                     disabled={isLoading}
-                    className="hover:text-muted-foreground font-medium underline">{isLoading ? "Loading..." : "View more"}
+                    className="hover:text-muted-foreground font-medium underline">
+                      {isLoading ? "Loading..." : "View more"}
                 </button>
               </div>
           )} 

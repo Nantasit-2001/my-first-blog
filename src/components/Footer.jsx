@@ -1,7 +1,8 @@
 import { Github,Icon,Linkedin} from "lucide-react";
 import IconGoogle from "../assets/image/IconGoogle.png"
-
+import { useNavigate } from "react-router-dom";
 function Footer (){
+    const navigate = useNavigate();
     return(
         <>
         <section className="flex flex-col justify-center items-center gap-6 bg-[#EFEEEB] h-38  
@@ -20,7 +21,7 @@ function Footer (){
                     <img className="w-6 h-6 cursor-pointer" src={IconGoogle}/>
                 </div>
             </div>
-            <a className="underline text-base cursor-pointer">Home page</a>
+            <button className="underline text-base cursor-pointer" onClick={()=>navigate("/")}>Home page</button>
             
         </section>
         </>

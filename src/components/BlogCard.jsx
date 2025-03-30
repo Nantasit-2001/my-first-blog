@@ -1,8 +1,16 @@
-function BlogCard({image, category, title, description, author,date }) {
+import { useNavigate } from "react-router-dom";
+function BlogCard({id,image, category, title, description, author,date }) {
+  const navigate = useNavigate();
+  
+  function navigateTo (){
+    navigate("/post/"+id)
+  }
+
     return (
       <div className="flex flex-col gap-4">
         <a href="#" className="relative h-[212px] sm:h-[360px]">
-          <img className="w-full h-full object-cover rounded-md" src={image} alt="Understanding Cat Behavior: Why Your Feline Friend Acts the Way They Do"/>
+          <img className="w-full h-full object-cover rounded-md"  src={image} alt="Understanding Cat Behavior: Why Your Feline Friend Acts the Way They Do"
+                  onClick={()=>navigateTo()}/>
         </a>
         <div className="flex flex-col">
           <div className="flex">
@@ -10,7 +18,7 @@ function BlogCard({image, category, title, description, author,date }) {
             </span>
           </div>
           <a href="#" >
-            <h2 className="text-start font-bold text-xl mb-2 line-clamp-2 hover:underline">
+            <h2 className="text-start font-bold text-xl mb-2 line-clamp-2 hover:underline" onClick={()=>navigateTo()}>
             {title}
             </h2>
           </a>

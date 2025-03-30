@@ -2,7 +2,7 @@ import { useState,useEffect } from "react";
 import BlogCard from "./BlogCard";
 import blogPosts from "@/Data/blogPosts";
 import axios, { Axios } from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 import { Input } from "./ui/input"
 import { Database, Search } from 'lucide-react';
@@ -28,7 +28,20 @@ function ArticleSection (){
   const [hasMore,setHasMore] = useState(true)
   const [isLoading,setIsLoading] = useState(false)
 
+  const [objSearchKeyword,setObjSearchKeyword] =useState({searchInput:"",searchData:[],openDropDown:false})
+  const navigate =useNavigate();
   useEffect(()=>{fetchPosts()},[selectedCategory,page])
+  useEffect(()=>{searchKeyword()},[objSearchKeyword.searchInput])
+  
+  async function searchKeyword() {
+    try{
+      const tempSearchData = await axios.get( `https://blog-post-project-api.vercel.app/posts?keyword=${objSearchKeyword.searchInput}`)
+      setObjSearchKeyword((item)=>({...item,searchData:tempSearchData.data.posts}))
+      
+    }catch(error){
+      console.log("❌"+error);
+    }
+  }
 
   async function fetchPosts(){
     setIsLoading(true);
@@ -60,12 +73,30 @@ function ArticleSection (){
                                     sm:order-last sm:w-[35%]">
                 <Input type="search"
                         placeholder="search" 
+                        value={objSearchKeyword.searchInput||""}
+                        onChange={(event)=>setObjSearchKeyword((item)=>({...item,searchInput:event.target.value}))}
+                        onFocus={() => setObjSearchKeyword((item)=>({...item,openDropDown:true}))}
+                        onBlur={() => setTimeout(() => setObjSearchKeyword((item) => ({ ...item, openDropDown: false })), 100)}
                         className="bg-white py-6 text-xl border-2
                                     sm:text-base lg:text-xl"/>
                 <Search color="gray" 
                         strokeWidth={2} 
                         className="absolute size-5 inset-y-4 right-2 
                                    sm:size-4 lg:size-5"/>
+            {objSearchKeyword.openDropDown?
+            <div className="absolute bg-white z-99"> 
+            {objSearchKeyword.searchData.map((item,index)=>
+                <button
+                  key={index}
+                  className="text-start px-4 py-2 block w-full text-sm text-foreground rounded-sm  hover:bg-[#EFEEEB] hover:rounded-sm cursor-pointer"
+                  onClick={() => 
+                    navigate(`/post/${item.id}`)}
+                  >
+                    {item.title}
+                </button>
+            )}</div>
+            :undefined}
+            
             </div>
             <div className='w-full mt-4 
                             sm:hidden'>

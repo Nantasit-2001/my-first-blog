@@ -88,7 +88,7 @@ function ArticleSection (){
             {objSearchKeyword.searchData.map((item,index)=>
                 <button
                   key={index}
-                  className="text-start px-4 py-2 block w-full text-sm text-foreground rounded-sm  hover:bg-[#EFEEEB] hover:rounded-sm cursor-pointer"
+                  className="text-start px-4 py-2 block w-full text-sm text-foreground rounded-sm hover:bg-[#EFEEEB] hover:rounded-sm cursor-pointer"
                   onClick={() => 
                     navigate(`/post/${item.id}`)}
                   >

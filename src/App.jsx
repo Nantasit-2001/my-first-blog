@@ -7,6 +7,8 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import HomePage from './page/HomePage'
 import ViewPostPage from './page/ViewPostPage';
 import NotFoundPage from './page/NotFoundPage'
+import SignUpPage from './page/SignUpPage'
+import SignUpSuccessPage  from './page/SignUpSuccessPage'   
 function App() {
   return (
     <>
@@ -14,7 +16,14 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage/>} />
         <Route path="/post/:postId" element={<ViewPostPage/>} />
+        
+        <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/sign-up/success" element={<SignUpSuccessPage />} />
+        {/* <Route path="/login" element={<LoginPage />} /> */}
+        {/* <Route path="/profile" element={<ProfilePage />} /> */}
+        
         <Route path="*" element={<NotFoundPage/>} />
+      
       </Routes>
     </BrowserRouter>  
     <Toaster />

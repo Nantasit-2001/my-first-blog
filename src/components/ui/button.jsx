@@ -20,7 +20,11 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         LatestArticles:
-          "hover:bg-[rgb(245,245,245)] hover:text-accent-foreground dark:hover:bg-accent/50 lg:text-base lg:h-12 cursor-pointer",
+          "hover:bg-[rgb(245,245,245)] hover:text-accent-foreground dark:hover:bg-accent/50 lg:text-base lg:h-12 cursor-pointer ",
+        blackButton:
+           " border-2 bg-[#26231E] text-[#FFFFFF] text-[16px] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer" ,
+        whiteButton:
+           " border-2  bg-[#FFFFFF] text-[16px] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer ",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

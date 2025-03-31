@@ -8,7 +8,8 @@ import HomePage from './page/HomePage'
 import ViewPostPage from './page/ViewPostPage';
 import NotFoundPage from './page/NotFoundPage'
 import SignUpPage from './page/SignUpPage'
-import SignUpSuccessPage  from './page/SignUpSuccessPage'   
+import SignUpSuccessPage  from './page/SignUpSuccessPage'
+import LoginPage from './page/LoginPage'
 function App() {
   return (
     <>
@@ -19,7 +20,7 @@ function App() {
         
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-up/success" element={<SignUpSuccessPage />} />
-        {/* <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
         {/* <Route path="/profile" element={<ProfilePage />} /> */}
         
         <Route path="*" element={<NotFoundPage/>} />

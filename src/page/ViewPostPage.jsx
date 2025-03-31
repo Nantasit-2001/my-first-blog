@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { Toaster, toast } from 'sonner'
 
@@ -21,6 +21,7 @@ import PersonCat from "../assets/image/Person-cat.png"
 
 function ViewPostPage() {
     const param = useParams();
+    const navigate = useNavigate();
     const [content, setContent] = useState({});
     const [loading, setLoading] = useState(true);
     const [alertCreateAccountState,setAlertCreateAccountState]=useState(false);
@@ -71,14 +72,13 @@ function ViewPostPage() {
             console.log(text)
               navigator.clipboard.writeText(text)
                 .then(() => {
-                    // toast("Event has been created.")
                     toast.custom((t) => (
                         <div className="bg-green-500 text-white p-6 rounded-lg relative pr-10">
                             <div>
                             <h2 className="text-xl font-bold mb-2">Copied!</h2>
                             <p className="text-sm">This article has been copied to your clipboard.</p>
                             </div>
-                            <span onClick={() => toast.dismiss()}><X className="cursor-pointer absolute top-4 right-4" /></span>
+                            <span onClick={() => toast.dismiss(t)}><X className="cursor-pointer absolute top-4 right-4" /></span>
                         </div>
                       ));  
                 })
@@ -145,12 +145,14 @@ function ViewPostPage() {
         <AlertDialogTitle className="text-3xl font-semibold pb-2 text-center">
           Create an account to continue
         </AlertDialogTitle>
-        <button className="rounded-full text-white bg-foreground hover:bg-muted-foreground transition-colors py-4 text-lg w-52">
-          Create account
+        <button className="rounded-full text-white bg-foreground hover:bg-muted-foreground transition-colors py-4 text-lg w-52"
+            onClick={()=>navigate("/sign-up")}>
+            Create account
         </button>
         <AlertDialogDescription className="flex flex-row gap-1 justify-center font-medium text-center pt-2 text-muted-foreground">
           Already have an account?
-          <a href="/login" className="text-foreground hover:text-muted-foreground transition-colors underline font-semibold">
+          <a href="/login" className="text-foreground hover:text-muted-foreground transition-colors underline font-semibold "
+            onClick={()=>navigate("/Login")}>
             Log in
           </a>
         </AlertDialogDescription>

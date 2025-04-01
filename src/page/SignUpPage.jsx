@@ -1,47 +1,34 @@
 import NavBar from "@/components/NavBar"
 import { Button } from "@/components/ui/button"
-import { useState} from "react"
 import { useNavigate } from "react-router-dom";
 import LabelAndInput from "@/components/LabelAndInput";
+import useForm from "@/hooks/useForm";
+
+
+
 
 function SignUpPage (){
-    const [textInput,setTextInput] = useState({ 
-        name:"",
-        username:"",
-        email:"",
-        password:""
-    });
-    const [textInputError,setTextInputError] =useState({
-        name:"",
-        username:"",
-        email:"",
-        password:""
-    })
-    const stateInput ={textInput,setTextInput,textInputError,setTextInputError}
-
     const navigate = useNavigate();
+   
+    const form = useForm({ name: "", username: "", email: "", password: "" },
+        (values) => {
+            let textErrors = {};
+            if (!values.name.trim()) textErrors.name = "Name cannot be empty.";
+            if (!values.username.trim()) textErrors.username = "Username cannot be empty.";
+            if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email)) {textErrors.email = "Email must be a valid email"}
+                else if(values.email===null){textErrors.email = "Email is already taken, Please try another email."}
+            if (values.password.length < 6) textErrors.password = "Password must be at least 6 characters";
+            return textErrors;
+        }
+    );
 
-    function checkInput (){
-        let hasError = false
-        const tempTextInputError = {name:"",username:"",email:"",password:""}
-        if(textInput.name===""){tempTextInputError.name = "Name cannot be empty.";hasError=true}
-        if(textInput.username===""){tempTextInputError.username ="Username cannot be empty.";hasError=true}
-        if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(textInput.email))
-                {tempTextInputError.email="Email must be a valid email"; hasError=true}
-            else if(textInput.email===null){tempTextInputError.email="Email is already taken, Please try another email."}
-            if (textInput.password.length < 6){tempTextInputError.password="Password must be at least 6 characters", hasError=true}
-        setTextInputError({...tempTextInputError})
-        return hasError
-    }
-    
     function registration (e) {
         e.preventDefault();
-        const inputError =checkInput();
-        if(inputError){
-        }else{
-            navigate("/sign-up/success")
+        if (form.validateForm()) { 
+            navigate("/sign-up/success");
         }
     }
+
     return(
     <>
         <NavBar/>
@@ -55,31 +42,28 @@ function SignUpPage (){
             
             <form   onSubmit={(e)=>registration(e)} 
                     className="flex flex-col items-center gap-6 md:gap-7">
+
+                    <LabelAndInput label="Name"
+                                   id="name" 
+                                   type="text"
+                                   form={form} />
+                    
+                    <LabelAndInput label="Username" 
+                                   id="username" 
+                                   type="text" 
+                                   form={form} />
+                    
+                    <LabelAndInput label="Email"
+                                   id="email"
+                                   type="email" 
+                                   form={form} />
+                    
+                    <LabelAndInput label="Password" 
+                                   id="password" 
+                                   type="password" 
+                                   form={form} />
             
-            <LabelAndInput  textLabel="Name" 
-                            id="name" type="text" 
-                            textPlaceholder="Full name" 
-                            {...stateInput}/>
-            
-            <LabelAndInput  textLabel="Username" 
-                            id="username" 
-                            type="text" 
-                            textPlaceholder="Username" 
-                            {...stateInput}/> 
-            
-            <LabelAndInput  textLabel="Email"
-                            id="email" 
-                            type="email" 
-                            textPlaceholder="Email" 
-                            {...stateInput}/>
-           
-           <LabelAndInput   textLabel="Password" 
-                            id="password" 
-                            type="password" 
-                            textPlaceholder="Password" 
-                            {...stateInput}/>
-            
-            <Button variant={"blackButton"} 
+                <Button variant={"blackButton"} 
                     className="w-[140px] px-10 py-6 mb-6 lg:mt-3 lg:mb-10"
                     type="submit" 
                     >Sign up</Button>

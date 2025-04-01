@@ -1,19 +1,19 @@
-const LabelAndInput = (({ textLabel, id, type, textPlaceholder,textInput,setTextInput,textInputError,setTextInputError}) => {
+const LabelAndInput = ({ label, id, type = "text", placeholder, form }) => {
     return (
         <div className="w-full font-semibold">
-            <label htmlFor={id} className="text-[#75716B] block p-1">{textLabel}</label>
+            <label htmlFor={id} className="text-gray-600 block p-1">{label}</label>
             <input
-                className={`p-3 pl-4 rounded-lg border-2 w-full bg-white  ${textInputError[id]===""?"text-black border-[#DAD6D1]":"text-[#EB5164] border-[#EB5164]"}`}
                 id={id}
                 type={type}
-                placeholder={textPlaceholder}
-                value={textInput[id]}
-                onChange={(event) => {setTextInput((prev) => ({ ...prev, [id]:event.target.value}));
-                                      setTextInputError((prev)=>({...prev,[id]:""}))}}
+                value={form.values[id]} // ดึงค่าจาก useForm
+                onChange={form.handleChange} // ใช้ handleChange จาก useForm
+                placeholder={placeholder||label}
+                className={`p-3 pl-4 rounded-lg border-2 w-full bg-white 
+                           ${form.errors[id] ? "border-red-500 text-red-500" : "border-gray-300 text-black"}`}
             />
-            {textInputError[id]===""?undefined:<span className="text-sm text-[#EB5164] font-normal"> {textInputError[id]}</span>}
+            {form.errors[id] && <span className="text-sm text-red-500 font-normal">{form.errors[id]}</span>}
         </div>
     );
-});
+};
 
-export default LabelAndInput
+export default LabelAndInput;

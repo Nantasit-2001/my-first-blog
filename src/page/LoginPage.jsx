@@ -3,32 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogTitle,
-    AlertDialogDescription,
-    AlertDialogCancel,
-  } from "@/components/ui/alert-dialog";
 import { toast } from 'sonner'
-
-const LabelAndInput = (({ textLabel, id, type, textPlaceholder,textInput,setTextInput,textInputError,setTextInputError}) => {
-    return (
-        <div className="w-full font-semibold">
-            <label htmlFor={id} className="text-[#75716B] block p-1">{textLabel}</label>
-            <input
-                className={`p-3 pl-4 rounded-lg border-2 w-full bg-white  ${textInputError[id]===""?"text-black border-[#DAD6D1]":"text-[#EB5164] border-[#EB5164]"}`}
-                id={id}
-                type={type}
-                placeholder={textPlaceholder}
-                value={textInput[id]}
-                onChange={(event) => {setTextInput((prev) => ({ ...prev, [id]:event.target.value}));
-                                      setTextInputError((prev)=>({...prev,[id]:""}))}}
-            />
-            {textInputError[id]===""?undefined:<span className="text-sm text-[#EB5164] font-normal"> {textInputError[id]}</span>}
-        </div>
-    );
-});
+import LabelAndInput from "@/components/LabelAndInput";
 
 function LoginPage (){
     const [textInput,setTextInput] = useState({ 
@@ -39,9 +15,9 @@ function LoginPage (){
         email:"",
         password:""
     })
-    const navigate = useNavigate();
     const stateInput ={textInput,setTextInput,textInputError,setTextInputError}
-    // const [isOn,setIsOn] = useState(false)
+
+    const navigate = useNavigate();
 
     function checkInput (){
         let hasError = false

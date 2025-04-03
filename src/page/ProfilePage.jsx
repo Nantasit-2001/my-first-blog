@@ -43,11 +43,11 @@ function ProfilePage () {
             
             <div className="flex flex-row w-full h-[48px] md:hidden ">
                 <button className="w-1/3 flex justify-center items-center gap-3 font-medium px-4 py-3 text-[#43403B] "><UserRound/> Profile</button>
-                <button className="w-2/3 flex items-center gap-3 px-4 font-medium text-[#726d64]"><RotateCcw color="#DAD6D1" RotateCcw={33} />Reset password</button>
+                <button className="w-2/3 flex items-center gap-3 px-4 font-medium text-[#726d64]"><RotateCcw color="#DAD6D1" />Reset password</button>
             </div>    
 
         <div className="flex flex-col md:flex-row justify-center md:mt-[142px] sm:mx-4  ">
-            <div className=" md:flex md:relative ">
+            <div className=" md:flex md:relative">
                 <div className="flex items-center py-6 pl-4 gap-3 
                             md:p-0 md:absolute top-[-90px] md:left-0  md:w-[300px]">
                     <img className="w-10 h-10 rounded-[99px] md:w-15 md:h-15" src={picturrr} alt="profile" />
@@ -59,7 +59,7 @@ function ProfilePage () {
 
                 <div className="hidden md:flex flex-col md:w-[196px] md:h md:mr-12 ">
                     <button className=" flex justify-start items-center gap-3 font-medium px-4 py-3 text-[#43403B] "><UserRound/> Profile</button>
-                    <button className=" flex items-center gap-3 px-4 py-3 font-medium text-[#726d64]"><RotateCcw color="#DAD6D1" RotateCcw={33} />Reset password</button>
+                    <button className=" flex items-center gap-3 px-4 py-3 font-medium text-[#726d64]"><RotateCcw color="#DAD6D1" />Reset password</button>
                 </div>
             
             </div>
@@ -74,7 +74,7 @@ function ProfilePage () {
                 </div>
                 <hr className="my-6 border-[#DAD6D1] border-1 w-[full]"/>
                 <form onSubmit={(e)=>changeProfile(e)}>
-                    <div className="flex flex-col gap-6 bg-amber-300">
+                    <div className="flex flex-col gap-6">
                         <LabelAndInput  label ="Name" 
                                         id="name" 
                                         type="text" 

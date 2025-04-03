@@ -11,6 +11,7 @@ import SignUpPage from './page/SignUpPage'
 import SignUpSuccessPage  from './page/SignUpSuccessPage'
 import LoginPage from './page/LoginPage'
 import ProfilePage from './page/ProfilePage'
+import ResetPasswordPage from './page/ResetPasswordPage'
 function App() {
   return (
     <>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/sign-up/success" element={<SignUpSuccessPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage/>}/>
         
         <Route path="*" element={<NotFoundPage/>} />
       

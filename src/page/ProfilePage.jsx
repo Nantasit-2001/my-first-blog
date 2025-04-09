@@ -11,7 +11,7 @@ function ProfilePage () {
     (values)=>{
         let textError = {}
         if(!values.name.trim())textError.name ="Name cannot be empty."
-        if(!values.name.trim())textError.username="Username cannot be empty."
+        if(!values.username.trim())textError.username="Username cannot be empty."
     return textError
     }
     )
@@ -33,7 +33,7 @@ function ProfilePage () {
     function changeProfile (e){
         e.preventDefault();
         if(form.validateForm())showToast("#12B279","Saved profile","Your profile has been successfully updated");
-            else showToast("#ff2d2d","Saved profile error","Your profile has been error updated");
+            else showToast("#fb2c36","Saved profile error","Your profile has been error updated");
     }
 
     return(

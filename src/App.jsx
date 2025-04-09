@@ -12,6 +12,8 @@ import SignUpSuccessPage  from './page/SignUpSuccessPage'
 import LoginPage from './page/LoginPage'
 import ProfilePage from './page/ProfilePage'
 import ResetPasswordPage from './page/ResetPasswordPage'
+import AdminLoginPage from './page/Admin/AdminLoginPage'
+import AdminArticlePage from './page/Admin/AdminArticlePage'
 function App() {
   return (
     <>
@@ -25,6 +27,8 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/reset-password" element={<ResetPasswordPage/>}/>
         
+        <Route path="/AdminLoginPage" element={<AdminLoginPage/>}/>
+        <Route path="/AdminArticlePage" element={<AdminArticlePage/>}/>
         <Route path="*" element={<NotFoundPage/>} />
       
       </Routes>

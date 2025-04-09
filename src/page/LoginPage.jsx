@@ -3,56 +3,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogTitle,
-    AlertDialogDescription,
-    AlertDialogCancel,
-  } from "@/components/ui/alert-dialog";
 import { toast } from 'sonner'
-
-const LabelAndInput = (({ textLabel, id, type, textPlaceholder,textInput,setTextInput,textInputError,setTextInputError}) => {
-    return (
-        <div className="w-full font-semibold">
-            <label htmlFor={id} className="text-[#75716B] block p-1">{textLabel}</label>
-            <input
-                className={`p-3 pl-4 rounded-lg border-2 w-full bg-white  ${textInputError[id]===""?"text-black border-[#DAD6D1]":"text-[#EB5164] border-[#EB5164]"}`}
-                id={id}
-                type={type}
-                placeholder={textPlaceholder}
-                value={textInput[id]}
-                onChange={(event) => {setTextInput((prev) => ({ ...prev, [id]:event.target.value}));
-                                      setTextInputError((prev)=>({...prev,[id]:""}))}}
-            />
-            {textInputError[id]===""?undefined:<span className="text-sm text-[#EB5164] font-normal"> {textInputError[id]}</span>}
-        </div>
-    );
-});
+import LabelAndInput from "@/components/LabelAndInput";
+import useForm from "@/hooks/useForm";
+import { Value } from "@radix-ui/react-select";
 
 function LoginPage (){
-    const [textInput,setTextInput] = useState({ 
-        email:"",
-        password:""
-    });
-    const [textInputError,setTextInputError] =useState({
-        email:"",
-        password:""
-    })
+   
     const navigate = useNavigate();
-    const stateInput ={textInput,setTextInput,textInputError,setTextInputError}
-    // const [isOn,setIsOn] = useState(false)
 
-    function checkInput (){
-        let hasError = false
-        const tempTextInputError = {email:"",password:""}
-        if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(textInput.email))
-                {tempTextInputError.email="Email must be a valid email"; hasError=true}
-            else if(textInput.email===null){tempTextInputError.email="Email is already taken, Please try another email."}
-        if (textInput.password.length < 6){tempTextInputError.password="Password must be at least 6 characters", hasError=true}
-        setTextInputError({...tempTextInputError})
-        return hasError
-    }
+    const form =useForm({email:"",password:""},
+        (values)=>{
+            let textErrors = {}
+            if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email))textErrors.email="Email is already taken, Please try another email.";
+                else if(values.email===null){textErrors.email="Email is already taken, Please try another email."}
+            if(values.password.length <6)textErrors.password = "Password must be at least 6 characters";
+        return textErrors;
+        }
+    )
     
     function showToast() {
         toast.custom((t) => (
@@ -68,14 +36,10 @@ function LoginPage (){
     
     function login (e) {
         e.preventDefault();
-        const inputError =checkInput();
-        
-        if(inputError){
-            showToast()
-        }else{
-            navigate("/sign-up/success")
-        }
+        if(form.validateForm()){navigate("/sign-up/success")}
+            else{showToast()}
     }    
+
     return(
         <>
         <NavBar/>
@@ -90,17 +54,15 @@ function LoginPage (){
             <form   onSubmit={(e)=>login(e)} 
                     className="flex flex-col items-center gap-6 md:gap-7">
             
-            <LabelAndInput  textLabel="Email"
+            <LabelAndInput  label="Email"
                             id="email" 
                             type="email" 
-                            textPlaceholder="Email" 
-                            {...stateInput}/>
+                            form={form}/>
            
-           <LabelAndInput   textLabel="Password" 
+           <LabelAndInput   label="Password" 
                             id="password" 
                             type="password" 
-                            textPlaceholder="Password" 
-                            {...stateInput}/>
+                            form={form}/>
 
             <Button variant={"blackButton"} 
                     className="w-[140px] px-10 py-6 mb-6 lg:mt-3 lg:mb-10"

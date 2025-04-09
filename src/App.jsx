@@ -10,6 +10,8 @@ import NotFoundPage from './page/NotFoundPage'
 import SignUpPage from './page/SignUpPage'
 import SignUpSuccessPage  from './page/SignUpSuccessPage'
 import LoginPage from './page/LoginPage'
+import ProfilePage from './page/ProfilePage'
+import ResetPasswordPage from './page/ResetPasswordPage'
 function App() {
   return (
     <>
@@ -17,11 +19,11 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage/>} />
         <Route path="/post/:postId" element={<ViewPostPage/>} />
-        
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-up/success" element={<SignUpSuccessPage />} />
         <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/profile" element={<ProfilePage />} /> */}
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage/>}/>
         
         <Route path="*" element={<NotFoundPage/>} />
       

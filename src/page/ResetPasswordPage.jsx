@@ -34,7 +34,7 @@ function ResetPasswordPage () {
             <AlertDialogContent className="bg-white rounded-md pt-16 pb-12 max-w-[26rem] sm:max-w-lg flex flex-col items-center gap-6">
               <AlertDialogTitle className="text-3xl font-bold pb-2 text-center">Reset password</AlertDialogTitle>
               <AlertDialogTitle className="text-xl pb-2 text-center text-[#75716B] font-normal">Do you want to reset your password?</AlertDialogTitle>
-              <AlertDialogDescription className="text-center text-muted-foreground">Please click the button below to proceed with resetting your password.</AlertDialogDescription> 
+             
               <div className="flex gap-2 ">
                 <Button variant="whiteButton" className="rounded-full py-6 px-10 text-lg "onClick={()=>setAlertResetPasswordState(false)}>Cancel</Button>
                 <Button variant="blackButton" className="rounded-full py-6 px-10 text-lg "onClick={()=>navigate("/")}>Reset</Button>

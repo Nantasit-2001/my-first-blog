@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "@/components/AdminSideBar"
-import { Plus,Pencil,Search,Trash2,X} from 'lucide-react';
+import SlideInPanel from "@/components/ui/SlideInPanel";
+import { Plus,Pencil,Search,Trash2,X,ChevronRight} from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {Select,
@@ -24,6 +25,7 @@ import {
 
 function AdminArticlePage (){
   const [alertDeleteArticleState,setAlertDeleteArticleState]=useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   function deleteData(){
     setAlertDeleteArticleState(false)
@@ -50,19 +52,28 @@ function AdminArticlePage (){
         <>
         <AlertDeleteArticle alertDeleteArticleState={alertDeleteArticleState} setAlertDeleteArticleState={setAlertDeleteArticleState}/>
           <section className="flex flex-row">
-          <SideBar pageNow="Article management"/>
-          <div className="flex flex-col  w-full ml-[335px]">
+          <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl 
+                            xl:hidden">
+                <ChevronRight onClick={() => setIsOpen(true)}/>
+                {/* Slide-in Component */}
+                <SlideInPanel pageNow="Article management" isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            </div>
+            
+            <div className="hidden xl:flex">
+                <SideBar pageNow="Article management" />            
+            </div>
+          <div className="flex flex-col  w-full xl:ml-[335px]">
             <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1] ">
               <div className=" flex flex-row justify-between items-center h-full my-6 w-full mx-15">
                 <h1 className="text-2xl font-bold">Article management</h1>               
-                <button className="bg-[#26231E] py-3 px-12 border-1 text-lg text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
+                <button className="bg-[#26231E] py-2 px-6 sm:py-3 sm:px-12 border-1 text-lg text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
                                     onClick={()=>{navigate('/AdminCreateArticlePage')}}> <Plus />Create article</button>
               </div>
             </div>
-            <div className="w-full px-15 py-5 ">
+            <div className="w-full px-10 sm:px-15 py-5 ">
               <div className=" flex justify-between my-5" >
                 {/* search */}
-                <div className="w-[360px] relative ">
+                <div className="w-[360px] relative z-[-1]">
                     <Input  type="search"
                             placeholder="search" 
                           // value={objSearchKeyword.searchInput||""}
@@ -70,7 +81,7 @@ function AdminArticlePage (){
                           // onFocus={() => setObjSearchKeyword((item)=>({...item,openDropDown:true}))}
                           // onBlur={() => setTimeout(() => setObjSearchKeyword((item) => ({ ...item, openDropDown: false })), 100)}
                             className=" bg-white py-6 text-xl border-2 pl-10 
-                                      sm:text-base lg:text-xl"/>
+                                      sm:text-base lg:text-xl "/>
                       <Search color="gray" 
                               strokeWidth={2} 
                               className="absolute size-5 inset-y-4 left-3 
@@ -111,15 +122,15 @@ function AdminArticlePage (){
               </div>
 
 
-              <table className="min-w-full border-collapse bg-[#ddd8d2] border-[1px] rounded-lg shadow-md overflow-hidden">
+              <table className="min-w-full  border-collapse bg-[#ddd8d2] border-[1px] rounded-lg shadow-md overflow-x-auto">
                   <thead className=" border-b-3">
                     <tr className="h-12 bg-[#F9F8F6] text-[#75716B] text-lg font-normal ">
-                    <th className="py-2 px-4 text-left">Article title</th>
-                    <th className="py-2 px-4 text-left">Category</th>
-                    <th className="py-2 px-4 text-left">Status</th>
-                    <th className="py-2 px-4"></th>
-                  </tr>
-                </thead>
+                      <th className="py-2 px-4 text-left">Article title</th>
+                      <th className="py-2 px-4 text-left">Category</th>
+                      <th className="py-2 px-4 text-left">Status</th>
+                      <th className="py-2 px-4"></th>
+                    </tr>
+                  </thead>
                 <tbody className="[&>tr:nth-child(odd)]:bg-white [&>tr:nth-child(even)]:bg-[#EFEEEB]">
                   <tr className="border-b h-16">
                     <td className="py-2 px-4">เข้าใจพฤติกรรมแมว: ทำไมเพื่อนแมวของคุณถึงทำตัวแบบที่พวกเขาทำ...</td>

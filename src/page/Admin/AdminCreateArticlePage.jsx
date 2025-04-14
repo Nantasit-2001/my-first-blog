@@ -1,6 +1,9 @@
 import SideBar from "@/components/AdminSideBar"
+import SlideInPanel from "@/components/ui/SlideInPanel";
 import LabelAndInput from "@/components/LabelAndInput"
+import { ChevronRight } from 'lucide-react';
 import useForm from "@/hooks/useForm"
+import { useState } from "react";
 import {Select,
     SelectContent,
     SelectGroup,
@@ -12,7 +15,7 @@ import {Select,
     SelectTrigger,
     SelectValue,} from '@/components/ui/select'
 function AdminCreateArticlePage (){
-    
+    const [isOpen, setIsOpen] = useState(false);
     const form =useForm({title:""},
         (values)=>{
             let textErrors = {}
@@ -26,7 +29,7 @@ function AdminCreateArticlePage (){
                 <Select 
                 // onValueChange={(value)=>setSelectedCategory(value)}
                 >
-                <SelectTrigger className=" bg-white py-6 my-2 text-gray-500 text-base w-[480px] h-12">
+                <SelectTrigger className=" bg-white py-6 my-2 text-gray-500 text-base w-full sm:max-w-[480px] h-12">
                 <SelectValue placeholder="Select category"/>
                 </SelectTrigger>
                 <SelectContent>
@@ -40,13 +43,27 @@ function AdminCreateArticlePage (){
     }
     return(
         <>
-        <section className="flex flex-row">
-            <SideBar pageNow="Article management"/>
-            <div className="flex flex-col w-full ml-[335px]">
+        <section className="flex flex-row ">
+            
+            <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl 
+                            xl:hidden">
+                <ChevronRight onClick={() => setIsOpen(true)}/>
+                {/* Slide-in Component */}
+                <SlideInPanel pageNow="Article management" isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            </div>
+            
+            <div className="hidden xl:flex">
+                <SideBar pageNow="Article management" />            
+            </div>
+            <div className="flex flex-col w-full xl:ml-[335px]">
                 <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1] ">
-                    <div className=" flex flex-row justify-between items-center h-full my-6 w-full mx-15">
-                        <h1 className="text-2xl font-bold">Create article</h1>               
-                        <div className=" flex flex-row gap-2">
+                    <div className=" flex flex-row justify-between items-center h-full my-6 w-full ml-12 mr-2
+                                    sm:ml-12 sm:mr-2
+                                    lg:mx-15">
+
+                        <h1 className="text-lg md:text-2xl font-bold
+                                        ">Create article</h1>               
+                        <div className="hidden sm:flex flex-row gap-2">
                             <button className="bg-[#ffffff] py-3 px-12 border-1 border-black text-lg text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
                                     // onClick={()=>{navigate('/AdminCreateArticlePage')}}>
                                     >Save as draft</button>
@@ -54,19 +71,29 @@ function AdminCreateArticlePage (){
                                     // onClick={()=>{navigate('/AdminCreateArticlePage')}}> 
                                     >Save and publish</button>
                         </div>
+                        <div className="sm:hidden flex flex-row gap-2">
+                            <button className="bg-[#ffffff] py-3 px-8  border-1 border-black text-sm  text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 
+                                                   sm:text-lg sm:px-12"
+                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}>
+                                    >draft</button>
+                            <button className="bg-[#26231E] py-3 px-8 border-1 text-sm text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 
+                                                   sm:text-lg sm:px-12  "
+                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}> 
+                                    >publish</button>
+                        </div>
                     </div>
                 </div>
                 <div className=" py-10 px-15 flex flex-col gap-6">
-                    <div className=" text-[#75716B] ">
-                        <h4>Thumbnail image</h4>
-                        <div className=" flex flex-row gap-6 items-end">
+                    <div className="">
+                        <h4 className="text-center lg:text-start">Thumbnail image</h4>
+                        <div className="flex flex-col lg:flex-row sm:gap-6 items-end">
                         <img    src="eerror" // รูปที่อาจโหลดไม่ได้
                                 alt="Image"
-                                className="w-[460px] h-[260px]"
+                                className="w-full lg:w-[460px] h-[260px]"
                                 onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src = "https://placehold.co/460x260?text=No+Image";}}/>
-                        <button className="bg-[#ffffff] h-12 px-12 border-1 border-black text-lg text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer "
+                        <button className="bg-[#ffffff] h-12 w-full lg:max-w-[300px]  border-1 border-black text-lg text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer "
                                     // onClick={()=>{navigate('/AdminCreateArticlePage')}}>
                                     >Upload thumbnail image</button>
                         </div>
@@ -76,12 +103,12 @@ function AdminCreateArticlePage (){
                         <SelectCategory/>
                     </div>
 
-                    <div  className="flex flex-col text-lg text-gray-500 gap-2 w-[480px]">
-                        <label className="w-[110px] text-gray-500 opacity-50 cursor-not-allowed" htmlFor="inputThompson">Author name</label>
+                    <div  className="flex flex-col text-lg text-gray-500 gap-2 w-full sm:max-w-[480px]">
+                        <label className="w-[110px] text-gray-500  cursor-not-allowed" htmlFor="inputThompson">Author name</label>
                         <input  type="text" 
                             id="inputThompson" 
                             placeholder="Thompson P." 
-                            class="bg-gray-200 text-gray-500 py-2 px-4 rounded opacity-50 pointer-events-none " 
+                            class="bg-gray-200 text-gray-500 py-2 px-4 rounded  pointer-events-none " 
                             disabled/>
                     </div>
                     

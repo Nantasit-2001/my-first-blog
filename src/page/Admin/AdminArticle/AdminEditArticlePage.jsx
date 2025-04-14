@@ -1,7 +1,7 @@
 import SideBar from "@/components/AdminSideBar"
 import SlideInPanel from "@/components/ui/SlideInPanel";
 import LabelAndInput from "@/components/LabelAndInput";
-import AlertDeleteArticle from "@/components/AlertDeleteArticle";
+import AlertDialogBox from "@/components/AlertDialog";
 import { ChevronRight,Trash2 } from 'lucide-react';
 import useForm from "@/hooks/useForm"
 import { useState } from "react";
@@ -53,7 +53,15 @@ function AdminEditArticlePage (){
 
     return(
         <>
-         <AlertDeleteArticle alertDeleteArticleState={alertDeleteArticleState} setAlertDeleteArticleState={setAlertDeleteArticleState} deleteData={deleteData}/>
+        <AlertDialogBox  title="Delete article"
+                              content="Do you want to delete this article?"
+                              buttonLeft="Cancel"
+                              functionButtonLeft={()=>{setAlertDeleteArticleState(false)}}
+                              buttonRight="Delete"
+                              functionButtonRight={()=>deleteData()}
+                              alertState={alertDeleteArticleState} 
+                              setAlertState={setAlertDeleteArticleState}
+        />
         <section className="flex flex-row ">
             
             <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl  

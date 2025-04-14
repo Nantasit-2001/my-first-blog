@@ -2,23 +2,31 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "@/components/AdminSideBar"
 import SlideInPanel from "@/components/ui/SlideInPanel";
-import AlertDeleteArticle from "@/components/AlertDeleteArticle";
+import AlertDialogBox from "@/components/AlertDialog";
 import { Plus,Pencil,Search,Trash2,X,ChevronRight} from 'lucide-react';
 import { Input } from "@/components/ui/input";
 
 function AdminCatergoryPage (){
-  const [alertDeleteArticleState,setAlertDeleteArticleState]=useState(false)
+  const [alertCategory,setAlertCategory]=useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   
   function deleteData(){
-    setAlertDeleteArticleState(false)
+    setAlertCategory(false)
   }
 
   
   return(
         <>
-        <AlertDeleteArticle alertDeleteArticleState={alertDeleteArticleState} setAlertDeleteArticleState={setAlertDeleteArticleState} deleteData={deleteData}/>
+          <AlertDialogBox  title="Delete category"
+                                      content="Do you want to delete this category?"
+                                      buttonLeft="Cancel"
+                                      functionButtonLeft={()=>{setAlertCategory(false)}}
+                                      buttonRight="Delete"
+                                      functionButtonRight={()=>deleteData() }
+                                      alertState={alertCategory} 
+                                      setAlertState={setAlertCategory}
+          />
           <section className="flex flex-row">
             <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl 
                             xl:hidden">
@@ -78,7 +86,7 @@ function AdminCatergoryPage (){
                       </div>
                     </div>
                     <div className="relative group">
-                      <Trash2 color="#75716B" className="cursor-pointer" onClick={() => {setAlertDeleteArticleState(true)}} />
+                      <Trash2 color="#75716B" className="cursor-pointer" onClick={() => {setAlertCategory(true)}} />
                       <div className="absolute left-1/2 transform -translate-x-1/2 bottom-10 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded p-2 transition-opacity">
                         Delete
                       </div>

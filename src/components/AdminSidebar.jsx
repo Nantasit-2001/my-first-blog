@@ -39,7 +39,7 @@ import { useNavigate } from 'react-router-dom';
   
         {/* Bottom section */}
         <div className="mb-4">
-          <div className={`${styleSelectableMenu} border-b-1 border-[#DAD6D1]`}>
+          <div className={`${styleSelectableMenu} border-b-1 border-[#DAD6D1]`} onClick={()=>navigate("/")}>
           <SquareArrowOutUpRight size={18}/> Nantasit. website
           </div>
           <div className={styleSelectableMenu}>

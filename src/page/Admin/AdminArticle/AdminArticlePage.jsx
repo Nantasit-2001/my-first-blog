@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "@/components/AdminSideBar"
 import SlideInPanel from "@/components/ui/SlideInPanel";
-import AlertDeleteArticle from "@/components/AlertDeleteArticle";
+import AlertDialogBox from "@/components/AlertDialog";
 import { Plus,Pencil,Search,Trash2,X,ChevronRight} from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,13 +16,6 @@ import {Select,
   SelectSeparator,
   SelectTrigger,
   SelectValue,} from '@/components/ui/select.jsx'
-import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogTitle,
-    AlertDialogDescription,
-    AlertDialogCancel,
-  } from "@/components/ui/alert-dialog";
 
 function AdminArticlePage (){
   const [alertDeleteArticleState,setAlertDeleteArticleState]=useState(false)
@@ -36,7 +29,15 @@ function AdminArticlePage (){
   
   return(
         <>
-        <AlertDeleteArticle alertDeleteArticleState={alertDeleteArticleState} setAlertDeleteArticleState={setAlertDeleteArticleState} deleteData={deleteData}/>
+        <AlertDialogBox  title="Delete article"
+                              content="Do you want to delete this article?"
+                              buttonLeft="Cancel"
+                              functionButtonLeft={()=>{setAlertDeleteArticleState(false)}}
+                              buttonRight="Delete"
+                              functionButtonRight={()=>deleteData()}
+                              alertState={alertDeleteArticleState} 
+                              setAlertState={setAlertDeleteArticleState}
+        />
           <section className="flex flex-row">
           <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl 
                             xl:hidden">

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import LabelAndInput from "@/components/LabelAndInput"
 import { useState } from "react"
 import useForm from "@/hooks/useForm"
+import AlertDialogBox from "@/components/AlertDialog"
 import {
     AlertDialog,
     AlertDialogContent,
@@ -51,13 +52,26 @@ function ResetPasswordPage () {
         e.preventDefault();
         
         if(form.validateForm()){setAlertResetPasswordState(true)};
-            
+    }
+
+    function ResetPassword(){
+      setAlertResetPasswordState(false)
     }
 
     return(
         <>
         <NavBar/>
-        <AlertResetPassword alertResetPasswordState={alertResetPasswordState} setAlertResetPasswordState={setAlertResetPasswordState} />
+        {/* <AlertResetPassword alertResetPasswordState={alertResetPasswordState} setAlertResetPasswordState={setAlertResetPasswordState} /> */}
+
+        <AlertDialogBox  title="Reset password"
+                              content="Do you want to reset your password?"
+                              buttonLeft="Cancel"
+                              functionButtonLeft={()=>{setAlertResetPasswordState(false)}}
+                              buttonRight="Reset "
+                              functionButtonRight={()=>ResetPassword()}
+                              alertState={alertResetPasswordState} 
+                              setAlertState={setAlertResetPasswordState}
+        />
 
         <section className="flex flex-col justify-center  md:mt-[52px]">
             <div className="flex flex-row w-full h-[48px] md:hidden ">

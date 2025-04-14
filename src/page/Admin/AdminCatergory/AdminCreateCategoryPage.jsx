@@ -1,6 +1,7 @@
 import SideBar from "@/components/AdminSideBar"
 import SlideInPanel from "@/components/ui/SlideInPanel";
 import LabelAndInput from "@/components/LabelAndInput"
+import showToast from "@/utils/ShowToast";
 import useForm from "@/hooks/useForm"
 import { ChevronRight } from 'lucide-react';
 import { useState } from "react";
@@ -16,8 +17,10 @@ function AdminCreateCategoryPage (){
         }
     )
     function CreateCategory (){
-        if(form.validateForm()){navigate('/AdminCategoryPage')}
-        console.log("error")
+        if(form.validateForm()){navigate('/AdminCategoryPage')
+        showToast("bg-[#12B279]","Create category","Category has been successfully created.")
+        }
+        else console.log("error")
     }
     return(
         <>

@@ -1,6 +1,5 @@
 import NavBar from "@/components/NavBar"
 import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
 import { X, UserRound, RotateCcw } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import LabelAndInput from "@/components/LabelAndInput"
@@ -50,9 +49,9 @@ function ResetPasswordPage () {
 
     function changePassword (e){
         e.preventDefault();
-        
         if(form.validateForm()){setAlertResetPasswordState(true)};
-    }
+        
+      }
 
     function ResetPassword(){
       setAlertResetPasswordState(false)
@@ -61,8 +60,6 @@ function ResetPasswordPage () {
     return(
         <>
         <NavBar/>
-        {/* <AlertResetPassword alertResetPasswordState={alertResetPasswordState} setAlertResetPasswordState={setAlertResetPasswordState} /> */}
-
         <AlertDialogBox  title="Reset password"
                               content="Do you want to reset your password?"
                               buttonLeft="Cancel"

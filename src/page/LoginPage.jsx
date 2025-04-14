@@ -1,12 +1,9 @@
 import NavBar from "@/components/NavBar";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { toast } from 'sonner'
+import showToast from "@/utils/ShowToast";
 import LabelAndInput from "@/components/LabelAndInput";
 import useForm from "@/hooks/useForm";
-import { Value } from "@radix-ui/react-select";
 
 function LoginPage (){
    
@@ -22,22 +19,10 @@ function LoginPage (){
         }
     )
     
-    function showToast() {
-        toast.custom((t) => (
-            <div className="hidden md:flex bg-[#EB5164] text-white p-6 rounded-lg relative pr-10 w-[700px]">
-                <div>
-                    <h2 className="text-xl font-bold mb-2">Your password is incorrect or this email doesn’t exist</h2>
-                    <p className="text-sm">Please try another password or email</p>
-                </div>
-                <span onClick={() => toast.dismiss(t)}><X className="cursor-pointer absolute top-4 right-4" /></span>
-            </div>
-        ));
-    }
-    
     function login (e) {
         e.preventDefault();
         if(form.validateForm()){navigate("/sign-up/success")}
-            else{showToast()}
+        else{showToast("bg-[#EB5164]","Your password is incorrect or this email doesn’t exist","Please try another password or email")}
     }    
 
     return(

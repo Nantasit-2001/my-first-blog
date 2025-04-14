@@ -74,13 +74,13 @@ function DropdownMenuItems({isAdmin,navigate}) {
               </div>
             </DropdownMenuItem>
             {isAdmin?
-                <DropdownMenuItem className="flex items-center justify-between p-4 font-medium hover:bg-gray-100 pl-10 cursor-pointer sm:pl-4"onClick={()=>{navigate("")}}>
-                  <div className="flex items-center gap-3" >
+                <DropdownMenuItem className="flex items-center justify-between p-4 font-medium hover:bg-gray-100 pl-10 cursor-pointer sm:pl-4"onClick={()=>navigate("/AdminArticlePage") }>
+                  <div className="flex items-center gap-3">
                       <ExternalLink />Admin panel
                   </div>
                 </DropdownMenuItem>:undefined}
             <DropdownMenuItem className="flex items-center p-4 font-medium hover:bg-gray-100 border-t border-gray-200 pl-10 cursor-pointer sm:pl-4"
-                              onClick={() => navigate("/logout")}>
+                              onClick={() => navigate("/login")}>
               <LogOut className='transform rotate-180'/>
               Log out
             </DropdownMenuItem>

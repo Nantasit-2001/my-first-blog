@@ -5,8 +5,8 @@ import LabelAndInput from "@/components/LabelAndInput";
 import SideBar from "@/components/AdminSideBar"
 import SlideInPanel from "@/components/ui/SlideInPanel";
 import AlertDialogBox from "@/components/AlertDialog";
-import { toast } from "sonner"
-import { Pencil,Search,Trash2,X,ChevronRight} from 'lucide-react';
+import showToast from "@/utils/showToast";
+import { ChevronRight} from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 function AdminProfilePage (){
@@ -26,22 +26,10 @@ function AdminProfilePage (){
     }
     )
 
-    function showToast(Bgcolor,header,content) {
-        toast.custom((t) => (
-            <div className={`${Bgcolor} lg-:w-[700px] md:w-[350px] text-white p-6 rounded-lg relative pr-10`}>
-                <div>
-                    <h2 className="text-xl font-bold mb-2">{header}</h2>
-                    <p className="text-sm">{content}</p>
-                </div>
-                <span onClick={() => toast.dismiss(t)}><X className="cursor-pointer absolute top-4 right-4" /></span>
-            </div>
-        ));
-    }
- 
     function saveProfile (e) {
     e.preventDefault();
-    if(form.validateForm()){showToast("bg-[#12B279]","Saved profile","Your profile has been successfully updated");}
-        else showToast("bg-[#fb2c36]","Saved profile error","Your profile has been error updated");
+    if(form.validateForm()){showToast("bg-[#12B279]","Saved profile","Your profile has been successfully updated")}
+    else showToast("bg-[#fb2c36]","Saved profile error","Your profile has been error updated");
   }
   return(
         <>

@@ -48,7 +48,7 @@ function ResetPasswordPage () {
         );
       }
 
-    function changeProfile (e){
+    function changePassword (e){
         e.preventDefault();
         
         if(form.validateForm()){setAlertResetPasswordState(true)};
@@ -97,7 +97,7 @@ function ResetPasswordPage () {
             
                 <div className=" bg-[#EFEEEB] flex flex-col px-4 pt-6 pb-10 w-full 
                                 md:max-h-[652px] md:max-w-[550px] md:mb-[150px] md:p-10 ">
-                    <form onSubmit={(e)=>changeProfile(e)}>
+                    <form onSubmit={(e)=>changePassword(e)}>
                     <div className="flex flex-col gap-6">
                         <LabelAndInput  label ="Current password" 
                                         id="CurrentPassword" 

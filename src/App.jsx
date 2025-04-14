@@ -19,6 +19,7 @@ import AdminEditArticlePage from './page/Admin/AdminArticle/AdminEditArticlePage
 import AdminCategoryPage from './page/Admin/AdminCatergory/AdminCategoryPage'
 import AdminCreateCategoryPage from './page/Admin/AdminCatergory/AdminCreateCategoryPage'
 import AdminEditCategoryPage from './page/Admin/AdminCatergory/AdminEditCategoryPage'
+import AdminProfilePage from './page/Admin/AdminProfilePage'
 function App() {
   return (
     <>
@@ -41,6 +42,8 @@ function App() {
         <Route path='/AdminCategoryPage' element={<AdminCategoryPage/>}/>
         <Route path='/AdminCreateCategoryPage' element={<AdminCreateCategoryPage/>}/>
         <Route path='/AdminEditCategoryPage' element={<AdminEditCategoryPage/>}/>
+
+        <Route path='AdminProfilePage' element={<AdminProfilePage/>}/>
 
         <Route path="*" element={<NotFoundPage/>} />
       

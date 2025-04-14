@@ -24,7 +24,7 @@ import { useNavigate } from 'react-router-dom';
               <li className={pageNow==="Category management"?styleSelectedMenu:styleSelectableMenu} onClick={()=>navigate("/AdminCategoryPage")}>
               <Folder size={18}/> Category management
               </li>
-              <li className={pageNow==="Profile"?styleSelectedMenu:styleSelectableMenu} onClick={()=>navigate("/AdminArticlePage")}>
+              <li className={pageNow==="Profile"?styleSelectedMenu:styleSelectableMenu} onClick={()=>navigate("/AdminProfilePage")}>
                 <User size={18}/> Profile
               </li>
               <li className={pageNow==="Notification"?styleSelectedMenu:styleSelectableMenu} onClick={()=>navigate("/AdminArticlePage")}>

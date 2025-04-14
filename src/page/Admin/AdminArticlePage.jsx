@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "@/components/AdminSideBar"
 import SlideInPanel from "@/components/ui/SlideInPanel";
+import AlertDeleteArticle from "@/components/AlertDeleteArticle";
 import { Plus,Pencil,Search,Trash2,X,ChevronRight} from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -27,30 +28,15 @@ function AdminArticlePage (){
   const [alertDeleteArticleState,setAlertDeleteArticleState]=useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  
   function deleteData(){
     setAlertDeleteArticleState(false)
   }
 
-  function AlertDeleteArticle() {  
-    return (
-      <AlertDialog open={alertDeleteArticleState} onOpenChange={setAlertDeleteArticleState}>
-        <AlertDialogContent className="bg-white rounded-md pt-16 pb-12 max-w-[26rem] sm:max-w-lg flex flex-col items-center gap-6">
-          <AlertDialogTitle className="text-3xl font-bold pb-2 text-center">Delete article</AlertDialogTitle>
-          <AlertDialogTitle className="text-xl pb-2 text-center text-[#75716B] font-normal">Do you want to delete this article?</AlertDialogTitle>
-          <div className="flex gap-2 ">
-            <Button variant="whiteButton" className="rounded-full py-6 px-10 text-lg "onClick={()=>setAlertDeleteArticleState(false)}>Cancel</Button>
-            <Button variant="blackButton" className="rounded-full py-6 px-10 text-lg "onClick={()=>deleteData()}>Delete</Button>
-          </div>
-          <AlertDialogCancel onClick={() => setAlertDeleteArticleState(false)} className="absolute right-4 top-2 sm:top-4 p-1 border-none">
-            <X className="h-6 w-6"/>
-          </AlertDialogCancel>
-        </AlertDialogContent>
-      </AlertDialog>
-    );
-  }  
+  
   return(
         <>
-        <AlertDeleteArticle alertDeleteArticleState={alertDeleteArticleState} setAlertDeleteArticleState={setAlertDeleteArticleState}/>
+        <AlertDeleteArticle alertDeleteArticleState={alertDeleteArticleState} setAlertDeleteArticleState={setAlertDeleteArticleState} deleteData={deleteData}/>
           <section className="flex flex-row">
           <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl 
                             xl:hidden">
@@ -138,10 +124,10 @@ function AdminArticlePage (){
                     <td className={`py-2 px-4 font-semibold ${"Published" === "Published" ? "text-[#12B279]" : ""}`}>เผยแพร่</td>
                     <td className="flex flex-row gap-4 justify-end items-center py-4 pr-6 ">
                     <div className="relative group">
-            <Pencil color="#75716B" className="cursor-pointer" onClick={() => {}} />
-            <div className="absolute left-1/2 transform -translate-x-1/2 bottom-10 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded p-2 transition-opacity">
+                      <Pencil color="#75716B" className="cursor-pointer" onClick={() => {navigate("/AdminEditArticlePage")}} />
+                      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-10 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded p-2 transition-opacity">
               Edit
-            </div>
+                    </div>
                     </div>
                     <div className="relative group">
                       <Trash2 color="#75716B" className="cursor-pointer" onClick={() => {setAlertDeleteArticleState(true)}} />

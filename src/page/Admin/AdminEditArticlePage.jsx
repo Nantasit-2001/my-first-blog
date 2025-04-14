@@ -1,9 +1,11 @@
 import SideBar from "@/components/AdminSideBar"
 import SlideInPanel from "@/components/ui/SlideInPanel";
-import LabelAndInput from "@/components/LabelAndInput"
-import { ChevronRight } from 'lucide-react';
+import LabelAndInput from "@/components/LabelAndInput";
+import AlertDeleteArticle from "@/components/AlertDeleteArticle";
+import { ChevronRight,Trash2 } from 'lucide-react';
 import useForm from "@/hooks/useForm"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {Select,
     SelectContent,
     SelectGroup,
@@ -14,7 +16,9 @@ import {Select,
     SelectSeparator,
     SelectTrigger,
     SelectValue,} from '@/components/ui/select'
-function AdminCreateArticlePage (){
+function AdminEditArticlePage (){
+    const navigate = useNavigate();
+    const [alertDeleteArticleState,setAlertDeleteArticleState]=useState(false)
     const [isOpen, setIsOpen] = useState(false);
     const form =useForm({title:""},
         (values)=>{
@@ -41,11 +45,18 @@ function AdminCreateArticlePage (){
                 </Select>
         )
     }
+
+    function deleteData(){
+        setAlertDeleteArticleState(false)
+        navigate("/AdminArticlePage")
+    }
+
     return(
         <>
+         <AlertDeleteArticle alertDeleteArticleState={alertDeleteArticleState} setAlertDeleteArticleState={setAlertDeleteArticleState} deleteData={deleteData}/>
         <section className="flex flex-row ">
             
-            <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl 
+            <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl  
                             xl:hidden">
                 <ChevronRight className="cursor-pointer" onClick={() => setIsOpen(true)}/>
                 {/* Slide-in Component */}
@@ -129,11 +140,14 @@ function AdminCreateArticlePage (){
                         <label htmlFor="Content" className="text-gray-600 block p-1  font-semibold">Introduction (max 120 letters)</label>
                         <textarea id="Content" cols="50" placeholder="Content" className="rounded-lg border-2 p-3 pl-4 h-[572px]"></textarea>
                     </div>
-
+                    
+                    <div className="flex flex-row gap-2 items-center cursor-pointer" onClick={()=>setAlertDeleteArticleState(true)}>
+                        <Trash2 size={18}/> <u>Delete article</u>
+                    </div>
                 </div>
             </div>
         </section>
         </>
     )
 }
-export default AdminCreateArticlePage
+export default AdminEditArticlePage

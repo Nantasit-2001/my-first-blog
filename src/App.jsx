@@ -13,9 +13,12 @@ import LoginPage from './page/LoginPage'
 import ProfilePage from './page/ProfilePage'
 import ResetPasswordPage from './page/ResetPasswordPage'
 import AdminLoginPage from './page/Admin/AdminLoginPage'
-import AdminArticlePage from './page/Admin/AdminArticlePage'
-import AdminCreateArticlePage from './page/Admin/AdminCreateArticlePage'
-import AdminEditArticlePage from './page/Admin/AdminEditArticlePage'
+import AdminArticlePage from './page/Admin/AdminArticle/AdminArticlePage'
+import AdminCreateArticlePage from './page/Admin/AdminArticle/AdminCreateArticlePage'
+import AdminEditArticlePage from './page/Admin/AdminArticle/AdminEditArticlePage'
+import AdminCategoryPage from './page/Admin/AdminCatergory/AdminCategoryPage'
+import AdminCreateCategoryPage from './page/Admin/AdminCatergory/AdminCreateCategoryPage'
+import AdminEditCategoryPage from './page/Admin/AdminCatergory/AdminEditCategoryPage'
 function App() {
   return (
     <>
@@ -34,6 +37,11 @@ function App() {
         <Route path="/AdminArticlePage" element={<AdminArticlePage/>}/>
         <Route path='/AdminCreateArticlePage' element={<AdminCreateArticlePage/>}/>
         <Route path='/AdminEditArticlePage' element={<AdminEditArticlePage/>}/>
+        
+        <Route path='/AdminCategoryPage' element={<AdminCategoryPage/>}/>
+        <Route path='/AdminCreateCategoryPage' element={<AdminCreateCategoryPage/>}/>
+        <Route path='/AdminEditCategoryPage' element={<AdminEditCategoryPage/>}/>
+
         <Route path="*" element={<NotFoundPage/>} />
       
       </Routes>

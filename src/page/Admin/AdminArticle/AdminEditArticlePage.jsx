@@ -73,7 +73,7 @@ function AdminEditArticlePage (){
                                     lg:mx-15">
 
                         <h1 className="text-lg md:text-2xl font-bold
-                                        ">Create article</h1>               
+                                        ">Edit article</h1>               
                         <div className="hidden sm:flex flex-row gap-2">
                             <button className="bg-[#ffffff] py-3 px-12 border-1 border-black text-lg text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
                                     // onClick={()=>{navigate('/AdminCreateArticlePage')}}>

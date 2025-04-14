@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SideBar from "@/components/AdminSideBar"
 import { Plus,Pencil,Search,Trash2,X} from 'lucide-react';
 import { Input } from "@/components/ui/input";
@@ -23,7 +24,7 @@ import {
 
 function AdminArticlePage (){
   const [alertDeleteArticleState,setAlertDeleteArticleState]=useState(false)
-  
+  const navigate = useNavigate();
   function deleteData(){
     setAlertDeleteArticleState(false)
   }
@@ -50,11 +51,12 @@ function AdminArticlePage (){
         <AlertDeleteArticle alertDeleteArticleState={alertDeleteArticleState} setAlertDeleteArticleState={setAlertDeleteArticleState}/>
           <section className="flex flex-row">
           <SideBar pageNow="Article management"/>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col  w-full ml-[335px]">
             <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1] ">
               <div className=" flex flex-row justify-between items-center h-full my-6 w-full mx-15">
                 <h1 className="text-2xl font-bold">Article management</h1>               
-                <button className="bg-[#26231E] py-3 px-12 border-1 text-lg text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "> <Plus />Create article</button>
+                <button className="bg-[#26231E] py-3 px-12 border-1 text-lg text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
+                                    onClick={()=>{navigate('/AdminCreateArticlePage')}}> <Plus />Create article</button>
               </div>
             </div>
             <div className="w-full px-15 py-5 ">
@@ -109,50 +111,47 @@ function AdminArticlePage (){
               </div>
 
 
-      <table className="min-w-full border-collapse bg-[#ddd8d2] border-[1px] rounded-lg shadow-md overflow-hidden">
-      <thead className=" border-b-3">
-        <tr className="h-12 bg-[#F9F8F6] text-[#75716B] text-lg font-normal ">
-          <th className="py-2 px-4 text-left">Article title</th>
-          <th className="py-2 px-4 text-left">Category</th>
-          <th className="py-2 px-4 text-left">Status</th>
-          <th className="py-2 px-4"></th>
-        </tr>
-      </thead>
-      <tbody className="[&>tr:nth-child(odd)]:bg-white [&>tr:nth-child(even)]:bg-[#EFEEEB]">
-        <tr className="border-b h-16">
-          <td className="py-2 px-4">เข้าใจพฤติกรรมแมว: ทำไมเพื่อนแมวของคุณถึงทำตัวแบบที่พวกเขาทำ...</td>
-          <td className="py-2 px-4">แมว</td>
-          <td className={`py-2 px-4 font-semibold ${"Published" === "Published" ? "text-[#12B279]" : ""}`}>เผยแพร่</td>
-          <td className="flex flex-row gap-4 justify-end items-center py-4 pr-6 ">
-          <div className="relative group">
+              <table className="min-w-full border-collapse bg-[#ddd8d2] border-[1px] rounded-lg shadow-md overflow-hidden">
+                  <thead className=" border-b-3">
+                    <tr className="h-12 bg-[#F9F8F6] text-[#75716B] text-lg font-normal ">
+                    <th className="py-2 px-4 text-left">Article title</th>
+                    <th className="py-2 px-4 text-left">Category</th>
+                    <th className="py-2 px-4 text-left">Status</th>
+                    <th className="py-2 px-4"></th>
+                  </tr>
+                </thead>
+                <tbody className="[&>tr:nth-child(odd)]:bg-white [&>tr:nth-child(even)]:bg-[#EFEEEB]">
+                  <tr className="border-b h-16">
+                    <td className="py-2 px-4">เข้าใจพฤติกรรมแมว: ทำไมเพื่อนแมวของคุณถึงทำตัวแบบที่พวกเขาทำ...</td>
+                    <td className="py-2 px-4">แมว</td>
+                    <td className={`py-2 px-4 font-semibold ${"Published" === "Published" ? "text-[#12B279]" : ""}`}>เผยแพร่</td>
+                    <td className="flex flex-row gap-4 justify-end items-center py-4 pr-6 ">
+                    <div className="relative group">
             <Pencil color="#75716B" className="cursor-pointer" onClick={() => {}} />
             <div className="absolute left-1/2 transform -translate-x-1/2 bottom-10 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded p-2 transition-opacity">
               Edit
             </div>
-          </div>
-          <div className="relative group">
-            <Trash2 color="#75716B" className="cursor-pointer" onClick={() => {setAlertDeleteArticleState(true)}} />
-            <div className="absolute left-1/2 transform -translate-x-1/2 bottom-10 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded p-2 transition-opacity">
-              Delete
-            </div>
-          </div>
-          </td>
-        </tr>
-        <tr className="border-b h-16">
-          <td className="py-2 px-4">เข้าใจพฤติกรรมแมว: ทำไมเพื่อนแมวของคุณถึงทำตัวแบบที่พวกเขาทำ...</td>
-          <td className="py-2 px-4">แมว</td>
-          <td className={`py-2 px-4 font-semibold ${"Published" === "Published" ? "text-[#12B279]" : ""}`}>เผยแพร่</td>
-          <td className="flex flex-row gap-4 justify-end items-center py-4 pr-6 ">
-          <Pencil color="#75716B"/>
-          <Trash2 color="#75716B"/>
-
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-              
+                    </div>
+                    <div className="relative group">
+                      <Trash2 color="#75716B" className="cursor-pointer" onClick={() => {setAlertDeleteArticleState(true)}} />
+                      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-10 opacity-0 group-hover:opacity-100 bg-black text-white text-sm rounded p-2 transition-opacity">
+                      Delete
+                      </div>
+                    </div>
+                    </td>
+                  </tr>
+                  <tr className="border-b h-16">
+                    <td className="py-2 px-4">เข้าใจพฤติกรรมแมว: ทำไมเพื่อนแมวของคุณถึงทำตัวแบบที่พวกเขาทำ...</td>
+                    <td className="py-2 px-4">แมว</td>
+                    <td className={`py-2 px-4 font-semibold ${"Published" === "Published" ? "text-[#12B279]" : ""}`}>เผยแพร่</td>
+                    <td className="flex flex-row gap-4 justify-end items-center py-4 pr-6 ">
+                      <Pencil color="#75716B"/>
+                      <Trash2 color="#75716B"/>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        
             </div>
           </div>
           </section>

@@ -3,8 +3,9 @@ import { NotebookText,Folder,User,Bell,KeyRound,SquareArrowOutUpRight,LogOut } f
     const styleSelectedMenu="px-6 py-3 h-15 bg-[#E4E0DA] font-medium text-[#43403B] text-lg flex items-center gap-3 "
     const styleSelectableMenu ="px-6 py-3 <h-15></h-15> hover:bg-gray-200 font-medium text-[#75716B] text-lg flex items-center gap-3 cursor-pointer"
     console.log(pageNow)
-    return (
-      <div className="h-screen w-[335px] bg-[#F6F5F3] flex flex-col justify-between py-4 ">
+    return (      
+      <div className="h-screen w-[335px] bg-[#F6F5F3] flex flex-col justify-between py-4 fixed
+                      ">
         {/* Top section */}
         <div>
           <div className="px-6 py-14">

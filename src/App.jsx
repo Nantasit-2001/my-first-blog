@@ -14,6 +14,7 @@ import ProfilePage from './page/ProfilePage'
 import ResetPasswordPage from './page/ResetPasswordPage'
 import AdminLoginPage from './page/Admin/AdminLoginPage'
 import AdminArticlePage from './page/Admin/AdminArticlePage'
+import AdminCreateArticlePage from './page/Admin/AdminCreateArticlePage'
 function App() {
   return (
     <>
@@ -30,6 +31,7 @@ function App() {
         
         <Route path="/AdminLoginPage" element={<AdminLoginPage/>}/>
         <Route path="/AdminArticlePage" element={<AdminArticlePage/>}/>
+        <Route path='/AdminCreateArticlePage' element={<AdminCreateArticlePage/>}/>
         <Route path="*" element={<NotFoundPage/>} />
       
       </Routes>

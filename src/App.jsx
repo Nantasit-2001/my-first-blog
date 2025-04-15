@@ -21,6 +21,7 @@ import AdminCreateCategoryPage from './page/Admin/AdminCatergory/AdminCreateCate
 import AdminEditCategoryPage from './page/Admin/AdminCatergory/AdminEditCategoryPage'
 import AdminProfilePage from './page/Admin/AdminProfilePage'
 import AdminNotificationPage from "./page/Admin/AdminNotificationPage"
+import AdminResetPasswordPage from './page/Admin/AdminResetpasswordPage'
 function App() {
   return (
     <>
@@ -46,6 +47,7 @@ function App() {
 
         <Route path='/AdminProfilePage' element={<AdminProfilePage/>}/>
         <Route path='/AdminNotificationPage' element={<AdminNotificationPage/>}/>
+        <Route path='/AdminResetPasswordPage' element={<AdminResetPasswordPage/>}/>
 
         <Route path="*" element={<NotFoundPage/>} />
       

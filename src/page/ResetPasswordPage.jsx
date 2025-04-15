@@ -50,7 +50,6 @@ function ResetPasswordPage () {
     function changePassword (e){
         e.preventDefault();
         if(form.validateForm()){setAlertResetPasswordState(true)};
-        
       }
 
     function ResetPassword(){

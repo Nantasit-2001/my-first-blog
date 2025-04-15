@@ -27,7 +27,7 @@ import { useNavigate } from 'react-router-dom';
               <li className={pageNow==="Profile"?styleSelectedMenu:styleSelectableMenu} onClick={()=>navigate("/AdminProfilePage")}>
                 <User size={18}/> Profile
               </li>
-              <li className={pageNow==="Notification"?styleSelectedMenu:styleSelectableMenu} onClick={()=>navigate("/AdminArticlePage")}>
+              <li className={pageNow==="Notification"?styleSelectedMenu:styleSelectableMenu} onClick={()=>navigate("/AdminNotificationPage")}>
               <Bell size={18} /> Notification
               </li>
               <li className={pageNow==="Reset password"?styleSelectedMenu:styleSelectableMenu} onClick={()=>navigate("/AdminArticlePage")}>

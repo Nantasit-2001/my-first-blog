@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
 import AlertDialogBox from "@/components/AlertDialog";
-import { Plus,Pencil,Search,Trash2,X,ChevronRight} from 'lucide-react';
+import AdminPageHeader from "@/components/AdminPageHeader";
+import { Pencil,Search,Trash2} from 'lucide-react';
 import { Input } from "@/components/ui/input";
 
 function AdminCatergoryPage (){
@@ -13,6 +14,9 @@ function AdminCatergoryPage (){
     setAlertCategory(false)
   }
 
+  function creatCategory (){
+    navigate('/AdminCreateCategoryPage')
+  }
   
   return(
         <>
@@ -27,14 +31,15 @@ function AdminCatergoryPage (){
           />
           <section className="flex flex-row">
             <AdminResponsiveSidebar pageNow="Category management"/>
-          <div className="flex flex-col  w-full xl:ml-[335px]">
-            <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1] ">
-              <div className=" flex flex-row justify-between items-center h-full my-6 w-full mx-15">
-                <h1 className="text-2xl font-bold">Category management</h1>               
-                <button className="bg-[#26231E] py-2 px-6 sm:py-3 sm:px-12 border-1 text-lg text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
-                                    onClick={()=>{navigate('/AdminCreateCategoryPage')}}> <Plus />Create category</button>
-              </div>
-            </div>
+            <div className="flex flex-col  w-full xl:ml-[335px]">
+            <AdminPageHeader    title="Category management"
+                                    buttons={[{
+                                              black:true,
+                                              plus:true,
+                                              text:"Create article",
+                                              functionOnClick: creatCategory
+                                            }]}
+              />
             <div className="w-full px-10 sm:px-15 py-5 ">
               <div className=" flex justify-between my-5" >
                 {/* search */}

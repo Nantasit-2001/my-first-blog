@@ -1,6 +1,7 @@
 import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
 import LabelAndInput from "@/components/LabelAndInput";
 import AlertDialogBox from "@/components/AlertDialog";
+import AdminPageHeader from "@/components/AdminPageHeader";
 import { Trash2 } from 'lucide-react';
 import useForm from "@/hooks/useForm"
 import { useState } from "react";
@@ -63,33 +64,27 @@ function AdminEditArticlePage (){
         <section className="flex flex-row ">
             <AdminResponsiveSidebar pageNow="Article management"/>
             <div className="flex flex-col w-full xl:ml-[335px]">
-                <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1] ">
-                    <div className=" flex flex-row justify-between items-center h-full my-6 w-full ml-12 mr-2
-                                    sm:ml-12 sm:mr-2
-                                    lg:mx-15">
-
-                        <h1 className="text-lg md:text-2xl font-bold
-                                        ">Edit article</h1>               
-                        <div className="hidden sm:flex flex-row gap-2">
-                            <button className="bg-[#ffffff] py-3 px-12 border-1 border-black text-lg text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
-                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}>
-                                    >Save as draft</button>
-                            <button className="bg-[#26231E] py-3 px-12 border-1 text-lg text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
-                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}> 
-                                    >Save and publish</button>
-                        </div>
-                        <div className="sm:hidden flex flex-row gap-2">
-                            <button className="bg-[#ffffff] py-3 px-8  border-1 border-black text-sm  text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 
-                                                   sm:text-lg sm:px-12"
-                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}>
-                                    >draft</button>
-                            <button className="bg-[#26231E] py-3 px-8 border-1 text-sm text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 
-                                                   sm:text-lg sm:px-12  "
-                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}> 
-                                    >publish</button>
-                        </div>
-                    </div>
-                </div>
+                <AdminPageHeader    title="Edit article"
+                                    buttons={[{
+                                                black:false,
+                                                text:"Draft",
+                                                value:"draft",
+                                                name:"action",
+                                                type:"submit",                                            
+                                                form:"CreateArticle",
+                                                textHiddenMobile:"Save and ",
+                                              },
+                                                {black: true,
+                                                text:"Publish" ,
+                                                value:"publish",
+                                                name:"action",
+                                                type:"submit",
+                                                form:"CreateArticle",
+                                                textHiddenMobile:"Save and ",
+                                                
+                                              },
+                                    ]}/>
+                                    
                 <div className=" py-10 px-15 flex flex-col gap-6">
                     <div className="">
                         <h4 className="text-center lg:text-start">Thumbnail image</h4>

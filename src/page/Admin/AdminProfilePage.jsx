@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useForm from "@/hooks/useForm";
 import LabelAndInput from "@/components/LabelAndInput";
 import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
+import AdminPageHeader from "@/components/AdminPageHeader";
 import AlertDialogBox from "@/components/AlertDialog";
 import showToast from "@/utils/showToast";
 import { Button } from "@/components/ui/button";
@@ -42,15 +43,15 @@ function AdminProfilePage (){
           <section className="flex flex-row">
             <AdminResponsiveSidebar pageNow="Profile"/>
             <div className="flex flex-col  w-full xl:ml-[335px] ">
-                <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1] ">
-                    <div className=" flex flex-row justify-between items-center h-full my-6 w-full ml-15 mr-6">
-                        <h1 className="text-2xl font-bold">Profile</h1>               
-                            <button className="bg-[#26231E] py-2 px-6 sm:py-3 sm:px-12 border-1 text-lg text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
-                                    // onClick={()=>{navigate('/AdminCreateCategoryPage')}}
-                                     type="submit" form="profile"
-                                    >Save</button>
-                    </div>
-                </div>
+                <AdminPageHeader    title="profile"
+                                    buttons={[{
+                                              black:true,
+                                              text:"Save",
+                                              name:"action",
+                                              type:"submit",                                            
+                                              form:"profile"
+                                              }]}/>
+
                 <div className="w-full px-10 sm:px-10 py-8 sm:py-1 ">
                     <div className="flex flex-col gap-6 justify-between items-center sm:mx-6 sm:my-4
                                 sm:flex-row sm:justify-normal ">

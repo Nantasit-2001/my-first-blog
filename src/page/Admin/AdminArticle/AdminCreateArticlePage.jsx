@@ -1,7 +1,7 @@
 import LabelAndInput from "@/components/LabelAndInput"
 import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
+import AdminPageHeader from "@/components/AdminPageHeader";
 import useForm from "@/hooks/useForm"
-import { useState } from "react";
 import {Select,
     SelectContent,
     SelectGroup,
@@ -13,7 +13,6 @@ import {Select,
     SelectTrigger,
     SelectValue,} from '@/components/ui/select'
 function AdminCreateArticlePage (){
-    const [isOpen, setIsOpen] = useState(false);
     const form =useForm({category:"",title:"",introduction:"",content:""},
         (values)=>{
             let textErrors = {}
@@ -52,7 +51,6 @@ function AdminCreateArticlePage (){
             // handleSaveDraft(formData);
           } else if (action === "publish") {
             if(form.validateForm()){console.log("2222")}
-            
             //handlePublish(formData);
           }
     }
@@ -62,34 +60,27 @@ function AdminCreateArticlePage (){
         <section className="flex flex-row ">
             <AdminResponsiveSidebar pageNow="Article management"/>
             <div className="flex flex-col w-full xl:ml-[335px]">
-                <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1] ">
-                    <div className=" flex flex-row justify-between items-center h-full my-6 w-full ml-12 mr-2
-                                    sm:ml-12 sm:mr-2
-                                    lg:mx-15">
-
-                        <h1 className="text-lg md:text-2xl font-bold
-                                        ">Create article</h1>               
-                        <div className="flex flex-row gap-2">
-                            <button className="bg-[#ffffff] border border-black text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3
-                                                text-sm px-8 py-3 sm:text-lg sm:px-11"
-                                    type="submit"
-                                    form="CreateArticle" 
-                                    name="action" 
-                                    value="draft">
-                                    <h4><span className="hidden sm:inline">Save and </span>Draft</h4>
-                            </button>
-                            <button className="bg-[#26231E] text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3
-                                                text-sm px-8 py-3 sm:text-lg sm:px-12"
-                                    type="submit"
-                                    form="CreateArticle"
-                                    name="action"
-                                    value="publish">
-                                    <h4><span className="hidden sm:inline">Save and </span>Publish</h4>
-                            </button>
-                        </div>
-                    </div>
-                </div>
                 
+                <AdminPageHeader    title="Create article"
+                                    buttons={[{
+                                                black:false,
+                                                text:"Draft",
+                                                value:"draft",
+                                                name:"action",
+                                                type:"submit",                                            
+                                                form:"CreateArticle",
+                                                textHiddenMobile:"Save and ",
+                                              },
+                                                {black: true,
+                                                text:"Publish" ,
+                                                value:"publish",
+                                                name:"action",
+                                                type:"submit",
+                                                form:"CreateArticle",
+                                                textHiddenMobile:"Save and ",
+                                              },
+                                    ]}/>
+
                 <form   className=" py-10 px-15 flex flex-col gap-6" 
                         id="CreateArticle"
                         onSubmit={(e)=>{handlesubmit(e)}}>

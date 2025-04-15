@@ -16,10 +16,13 @@ import {Select,
     SelectValue,} from '@/components/ui/select'
 function AdminCreateArticlePage (){
     const [isOpen, setIsOpen] = useState(false);
-    const form =useForm({title:""},
+    const form =useForm({category:"",title:"",introduction:"",content:""},
         (values)=>{
             let textErrors = {}
-            if(values.title="")textErrors.title = "title empty";
+            // if(!values.category==="")textErrors.category = "catergory cannot be empty";
+            if(values.title==="")textErrors.title ="Title cannot be empty";
+            if(values.introduction==="")textErrors.introduction ="Introduction cannot be empty";
+            if(values.content==="")textErrors.content ="Content cannot be empty";
         return textErrors;
         }
     )
@@ -41,6 +44,21 @@ function AdminCreateArticlePage (){
                 </Select>
         )
     }
+
+    function handlesubmit (e){
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const action = e.nativeEvent.submitter.value;
+        if (action === "draft") {
+            if(form.validateForm()){console.log("11111")}
+            // handleSaveDraft(formData);
+          } else if (action === "publish") {
+            if(form.validateForm()){console.log("2222")}
+            
+            //handlePublish(formData);
+          }
+    }
+
     return(
         <>
         <section className="flex flex-row ">
@@ -63,27 +81,30 @@ function AdminCreateArticlePage (){
 
                         <h1 className="text-lg md:text-2xl font-bold
                                         ">Create article</h1>               
-                        <div className="hidden sm:flex flex-row gap-2">
-                            <button className="bg-[#ffffff] py-3 px-12 border-1 border-black text-lg text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
-                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}>
-                                    >Save as draft</button>
-                            <button className="bg-[#26231E] py-3 px-12 border-1 text-lg text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 "
-                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}> 
-                                    >Save and publish</button>
-                        </div>
-                        <div className="sm:hidden flex flex-row gap-2">
-                            <button className="bg-[#ffffff] py-3 px-8  border-1 border-black text-sm  text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 
-                                                   sm:text-lg sm:px-12"
-                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}>
-                                    >draft</button>
-                            <button className="bg-[#26231E] py-3 px-8 border-1 text-sm text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3 
-                                                   sm:text-lg sm:px-12  "
-                                    // onClick={()=>{navigate('/AdminCreateArticlePage')}}> 
-                                    >publish</button>
+                        <div className="flex flex-row gap-2">
+                            <button className="bg-[#ffffff] border border-black text-[#000000] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3
+                                                text-sm px-8 py-3 sm:text-lg sm:px-11"
+                                    type="submit"
+                                    form="CreateArticle" 
+                                    name="action" 
+                                    value="draft">
+                                    <h4><span className="hidden sm:inline">Save and </span>Draft</h4>
+                            </button>
+                            <button className="bg-[#26231E] text-[#FFFFFF] font-semibold rounded-[50px] hover:bg-[#75716B] cursor-pointer flex flex-row items-center gap-3
+                                                text-sm px-8 py-3 sm:text-lg sm:px-12"
+                                    type="submit"
+                                    form="CreateArticle"
+                                    name="action"
+                                    value="publish">
+                                    <h4><span className="hidden sm:inline">Save and </span>Publish</h4>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div className=" py-10 px-15 flex flex-col gap-6">
+                
+                <form   className=" py-10 px-15 flex flex-col gap-6" 
+                        id="CreateArticle"
+                        onSubmit={(e)=>{handlesubmit(e)}}>
                     <div className="">
                         <h4 className="text-center lg:text-start">Thumbnail image</h4>
                         <div className="flex flex-col lg:flex-row sm:gap-6 items-end">
@@ -100,6 +121,7 @@ function AdminCreateArticlePage (){
                     </div> 
                     <div className='w-full mt-4'>
                         <label className="text-lg text-gray-500 font-normal">Category</label>
+                        
                         <SelectCategory/>
                     </div>
 
@@ -108,7 +130,7 @@ function AdminCreateArticlePage (){
                         <input  type="text" 
                             id="inputThompson" 
                             placeholder="Thompson P." 
-                            class="bg-gray-200 text-gray-500 py-2 px-4 rounded  pointer-events-none " 
+                            nameclass="bg-gray-200 text-gray-500 py-2 px-4 rounded  pointer-events-none " 
                             disabled/>
                     </div>
                     
@@ -120,17 +142,25 @@ function AdminCreateArticlePage (){
                                         form={form}/>
                     </div>
 
-                    <div className=" flex flex-col ">
-                        <label htmlFor="Introduction" className="text-gray-600 block p-1  font-semibold">Introduction (max 120 letters)</label>
-                        <textarea id="Introduction" row="4"cols="50" maxLength={120} placeholder="Introduction" className="text-4 rounded-lg border-2 p-3 pl-4 h-[125px]"></textarea>
+                    <div >
+                        <LabelAndInput  label="Introduction (max 120 letters)"
+                                        id="introduction" 
+                                        elementInput="textarea"
+                                        rows="5" 
+                                        placeholder="Article title"
+                                        form={form}/>
                     </div>
                     
-                    <div className=" flex flex-col ">
-                        <label htmlFor="Content" className="text-gray-600 block p-1  font-semibold">Introduction (max 120 letters)</label>
-                        <textarea id="Content" cols="50" placeholder="Content" className="rounded-lg border-2 p-3 pl-4 h-[572px]"></textarea>
+                    <div >
+                        <LabelAndInput  label="Content"
+                                        id="content" 
+                                        elementInput="textarea"
+                                        rows="24" 
+                                        placeholder="Content"
+                                        form={form}/>
                     </div>
 
-                </div>
+                </form>
             </div>
         </section>
         </>

@@ -1,14 +1,10 @@
-import SideBar from "@/components/AdminSideBar"
-import SlideInPanel from "@/components/ui/SlideInPanel";
+import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
 import LabelAndInput from "@/components/LabelAndInput"
 import showToast from "@/utils/ShowToast";
 import useForm from "@/hooks/useForm"
-import { ChevronRight } from 'lucide-react';
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 function AdminCreateCategoryPage (){
     const navigate = useNavigate()
-    const [isOpen, setIsOpen] = useState(false);
     const form =useForm({Category:""},
         (values)=>{
             let textErrors = {}
@@ -25,16 +21,7 @@ function AdminCreateCategoryPage (){
     return(
         <>
         <section className="flex flex-row ">
-            
-            <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl 
-                            xl:hidden">
-                <ChevronRight className="cursor-pointer" onClick={() => setIsOpen(true)}/>
-                {/* Slide-in Component */}
-                <SlideInPanel pageNow="Category management" isOpen={isOpen} onClose={() => setIsOpen(false)} />
-            </div>
-            <div className="hidden xl:flex">
-                <SideBar pageNow="Category management" />            
-            </div>
+            <AdminResponsiveSidebar pageNow="Category management"/>
             <div className="flex flex-col w-full xl:ml-[335px] ">
                 <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1]">
                     <div className=" flex flex-row justify-between items-center h-full my-6 w-full ml-12 mr-2

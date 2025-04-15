@@ -1,12 +1,8 @@
-import SideBar from "@/components/AdminSideBar"
-import SlideInPanel from "@/components/ui/SlideInPanel";
 import LabelAndInput from "@/components/LabelAndInput"
 import useForm from "@/hooks/useForm"
-import { ChevronRight } from 'lucide-react';
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
 function AdminResetPasswordPage (){
-    const [isOpen, setIsOpen] = useState(false);
     const [alertResetPasswordState, setAlertResetPasswordState] = useState(false);
     const form = useForm({CurrentPassword:"",NewPassword:"",Confirm:""},
         (values)=>{
@@ -26,17 +22,7 @@ function AdminResetPasswordPage (){
     return(
         <>
         <section className="flex flex-row ">
-            
-            <div className=" top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl 
-                            xl:hidden">
-                <ChevronRight className="cursor-pointer" onClick={() => setIsOpen(true)}/>
-                {/* Slide-in Component */}
-                <SlideInPanel pageNow="Reset password" isOpen={isOpen} onClose={() => setIsOpen(false)} />
-            </div>
-            
-            <div className="hidden xl:flex">
-                <SideBar pageNow="Reset password" />            
-            </div>
+        <AdminResponsiveSidebar pageNow="Reset password"/>
             <div className="flex flex-col w-full xl:ml-[335px]">
                 <div className="flex justify-center items-center h-[96px] w-full border-b-1 border-[#DAD6D1] ">
                     <div className=" flex flex-row justify-between items-center h-full my-6 w-full ml-12 mr-2

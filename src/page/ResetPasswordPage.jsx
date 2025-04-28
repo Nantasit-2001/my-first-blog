@@ -1,11 +1,11 @@
 import NavBar from "@/components/NavBar"
 import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
 import { X, UserRound, RotateCcw } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import LabelAndInput from "@/components/LabelAndInput"
 import { useState } from "react"
 import useForm from "@/hooks/useForm"
+import AlertDialogBox from "@/components/AlertDialog"
 import {
     AlertDialog,
     AlertDialogContent,
@@ -34,7 +34,7 @@ function ResetPasswordPage () {
             <AlertDialogContent className="bg-white rounded-md pt-16 pb-12 max-w-[26rem] sm:max-w-lg flex flex-col items-center gap-6">
               <AlertDialogTitle className="text-3xl font-bold pb-2 text-center">Reset password</AlertDialogTitle>
               <AlertDialogTitle className="text-xl pb-2 text-center text-[#75716B] font-normal">Do you want to reset your password?</AlertDialogTitle>
-              <AlertDialogDescription className="text-center text-muted-foreground">Please click the button below to proceed with resetting your password.</AlertDialogDescription> 
+             
               <div className="flex gap-2 ">
                 <Button variant="whiteButton" className="rounded-full py-6 px-10 text-lg "onClick={()=>setAlertResetPasswordState(false)}>Cancel</Button>
                 <Button variant="blackButton" className="rounded-full py-6 px-10 text-lg "onClick={()=>navigate("/")}>Reset</Button>
@@ -47,17 +47,27 @@ function ResetPasswordPage () {
         );
       }
 
-    function changeProfile (e){
+    function changePassword (e){
         e.preventDefault();
-        
         if(form.validateForm()){setAlertResetPasswordState(true)};
-            
+      }
+
+    function ResetPassword(){
+      setAlertResetPasswordState(false)
     }
 
     return(
         <>
         <NavBar/>
-        <AlertResetPassword alertResetPasswordState={alertResetPasswordState} setAlertResetPasswordState={setAlertResetPasswordState} />
+        <AlertDialogBox  title="Reset password"
+                              content="Do you want to reset your password?"
+                              buttonLeft="Cancel"
+                              functionButtonLeft={()=>{setAlertResetPasswordState(false)}}
+                              buttonRight="Reset "
+                              functionButtonRight={()=>ResetPassword()}
+                              alertState={alertResetPasswordState} 
+                              setAlertState={setAlertResetPasswordState}
+        />
 
         <section className="flex flex-col justify-center  md:mt-[52px]">
             <div className="flex flex-row w-full h-[48px] md:hidden ">
@@ -83,7 +93,7 @@ function ResetPasswordPage () {
             
                 <div className=" bg-[#EFEEEB] flex flex-col px-4 pt-6 pb-10 w-full 
                                 md:max-h-[652px] md:max-w-[550px] md:mb-[150px] md:p-10 ">
-                    <form onSubmit={(e)=>changeProfile(e)}>
+                    <form onSubmit={(e)=>changePassword(e)}>
                     <div className="flex flex-col gap-6">
                         <LabelAndInput  label ="Current password" 
                                         id="CurrentPassword" 

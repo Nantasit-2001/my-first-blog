@@ -12,6 +12,16 @@ import SignUpSuccessPage  from './page/SignUpSuccessPage'
 import LoginPage from './page/LoginPage'
 import ProfilePage from './page/ProfilePage'
 import ResetPasswordPage from './page/ResetPasswordPage'
+import AdminLoginPage from './page/Admin/AdminLoginPage'
+import AdminArticlePage from './page/Admin/AdminArticle/AdminArticlePage'
+import AdminCreateArticlePage from './page/Admin/AdminArticle/AdminCreateArticlePage'
+import AdminEditArticlePage from './page/Admin/AdminArticle/AdminEditArticlePage'
+import AdminCategoryPage from './page/Admin/AdminCatergory/AdminCategoryPage'
+import AdminCreateCategoryPage from './page/Admin/AdminCatergory/AdminCreateCategoryPage'
+import AdminEditCategoryPage from './page/Admin/AdminCatergory/AdminEditCategoryPage'
+import AdminProfilePage from './page/Admin/AdminProfilePage'
+import AdminNotificationPage from "./page/Admin/AdminNotificationPage"
+import AdminResetPasswordPage from './page/Admin/AdminResetPasswordPage'
 function App() {
   return (
     <>
@@ -25,6 +35,20 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/reset-password" element={<ResetPasswordPage/>}/>
         
+        
+        <Route path="/AdminLoginPage" element={<AdminLoginPage/>}/>
+        <Route path="/AdminArticlePage" element={<AdminArticlePage/>}/>
+        <Route path='/AdminCreateArticlePage' element={<AdminCreateArticlePage/>}/>
+        <Route path='/AdminEditArticlePage' element={<AdminEditArticlePage/>}/>
+        
+        <Route path='/AdminCategoryPage' element={<AdminCategoryPage/>}/>
+        <Route path='/AdminCreateCategoryPage' element={<AdminCreateCategoryPage/>}/>
+        <Route path='/AdminEditCategoryPage' element={<AdminEditCategoryPage/>}/>
+
+        <Route path='/AdminProfilePage' element={<AdminProfilePage/>}/>
+        <Route path='/AdminNotificationPage' element={<AdminNotificationPage/>}/>
+        <Route path='/AdminResetPasswordPage' element={<AdminResetPasswordPage/>}/>
+
         <Route path="*" element={<NotFoundPage/>} />
       
       </Routes>

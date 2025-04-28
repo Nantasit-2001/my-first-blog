@@ -1,7 +1,7 @@
 import LabelAndInput from "@/components/LabelAndInput"
 import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
 import AdminPageHeader from "@/components/AdminPageHeader";
-import showToast from "@/utils/ShowToast";
+import showToast from "@/utils/showToast";
 import useForm from "@/hooks/useForm"
 import { useNavigate } from "react-router-dom";
 function AdminEditCategoryPage (){

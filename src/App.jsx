@@ -21,7 +21,7 @@ import AdminCreateCategoryPage from './page/Admin/AdminCatergory/AdminCreateCate
 import AdminEditCategoryPage from './page/Admin/AdminCatergory/AdminEditCategoryPage'
 import AdminProfilePage from './page/Admin/AdminProfilePage'
 import AdminNotificationPage from "./page/Admin/AdminNotificationPage"
-import AdminResetPasswordPage from './page/Admin/AdminResetpasswordPage'
+import AdminResetPasswordPage from './page/Admin/AdminResetPasswordPage'
 function App() {
   return (
     <>

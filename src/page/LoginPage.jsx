@@ -1,7 +1,7 @@
 import NavBar from "@/components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import showToast from "@/utils/ShowToast";
+import showToast from "@/utils/showToast";
 import LabelAndInput from "@/components/LabelAndInput";
 import useForm from "@/hooks/useForm";
 

@@ -1,7 +1,7 @@
 import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
 import LabelAndInput from "@/components/LabelAndInput"
 import AdminPageHeader from "@/components/AdminPageHeader";
-import showToast from "@/utils/ShowToast";
+import showToast from "@/utils/showToasthowToast";
 import useForm from "@/hooks/useForm"
 import { useNavigate } from "react-router-dom";
 function AdminCreateCategoryPage (){

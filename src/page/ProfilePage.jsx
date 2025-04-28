@@ -1,6 +1,6 @@
 import NavBar from "@/components/NavBar"
 import { Button } from "@/components/ui/button"
-import showToast from "@/utils/ShowToast"
+import showToast from "@/utils/showToast"
 import { UserRound, RotateCcw } from "lucide-react"
 import LabelAndInput from "@/components/LabelAndInput"
 import useForm from "@/hooks/useForm"

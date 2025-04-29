@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import BlogCard from "./BlogCard";
-import blogPosts from "@/Data/blogPosts";
-import axios, { Axios } from "axios";
+import { axiosFetchPosts } from "@/services/postService";
+
 import { useNavigate } from "react-router-dom";
 
 import { Input } from "./ui/input"
@@ -17,8 +17,6 @@ import {Select,
     SelectSeparator,
     SelectTrigger,
     SelectValue,} from './ui/select';
-
-    import { axiosFetchPosts } from "@/services/postService";
     
     
 function ArticleSection (){

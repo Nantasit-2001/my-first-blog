@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { Toaster, toast } from 'sonner'
+import { axiosfetchPostById } from "@/services/postService";
 
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -28,8 +29,11 @@ function ViewPostPage() {
     useEffect(() => {
         async function getPost() {
             try {
-                const response = await axios.get(`https://blog-post-project-api.vercel.app/posts/${param.postId}`);
-                const tempContent ={...response.data} 
+                const postId=param.postId 
+                const response = await axiosfetchPostById({postId})
+                // const response = await axios.get(`https://blog-post-project-api.vercel.app/posts/${param.postId}`);
+                const tempContent ={...response.data.data} 
+                // const tempContent ={...response.data} 
                 console.log(tempContent)
                 setContent(tempContent);
             } catch (error) {
@@ -41,10 +45,6 @@ function ViewPostPage() {
 
         getPost();
     }, [param]);
-
-    // if (loading) return <p>กำลังโหลด...</p>;
-    // if (!content) return <p>ไม่พบบทความ</p>;
-
     function AuthorInfo (){
         return(
         <>
@@ -163,7 +163,10 @@ function ViewPostPage() {
     </AlertDialog>
   );
 }
-
+const contentReactMarkdown = content.content;
+console.log(`"${contentReactMarkdown}"`);
+console.log("## 1. Vocal Communications\n\nExplore the various meows, purrs, and other vocalizations cats use to express themselves.\n\n## 2. Body Language\n\nLearn to read your cat's posture, tail position, and ear movements to understand their mood and intentions.\n\n## 3. Scent Marking\n\nDiscover why cats use scent to communicate and mark their territory.\n\n## 4. Facial Expressions\n\nUnderstand the subtle facial cues cats use to convey emotions and intentions.\n\n## 5. Interspecies Communication\n\nLearn how cats have adapted their communication methods to interact with humans and other animals.");
+console.log(`"${contentReactMarkdown}"`==="## 1. Vocal Communications\n\nExplore the various meows, purrs, and other vocalizations cats use to express themselves.\n\n## 2. Body Language\n\nLearn to read your cat's posture, tail position, and ear movements to understand their mood and intentions.\n\n## 3. Scent Marking\n\nDiscover why cats use scent to communicate and mark their territory.\n\n## 4. Facial Expressions\n\nUnderstand the subtle facial cues cats use to convey emotions and intentions.\n\n## 5. Interspecies Communication\n\nLearn how cats have adapted their communication methods to interact with humans and other animals.")
     return (
         <>
         <NavBar/>
@@ -194,6 +197,7 @@ function ViewPostPage() {
                         <p className="mt-4 mb-10">{content.description}</p>
                         <div className="markdown">
                             <ReactMarkdown>{content.content}</ReactMarkdown>
+                            
                         </div>
                     </article>
 

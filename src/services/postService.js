@@ -5,12 +5,11 @@ const API_URL = `${import.meta.env.VITE_API_URL}/posts`; // API URL
 
 // GET /posts?page=1&limit=6&category=xxx&keyword=xxx
 export const axiosFetchPosts = (params) => {
-  console.log(params.keyword,"------")
   return axios.get(`${API_URL}?keyword=${params.keyword}&page=${params.page}&limit=${params.limit}&category=${params.category}`);
 };
 
 // GET /posts/:postId
-export const axiosfetchPostById = (postId) => {
+export const axiosfetchPostById = ({postId}) => {
   return axios.get(`${API_URL}/${postId}`);
 };
 

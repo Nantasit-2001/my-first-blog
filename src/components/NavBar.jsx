@@ -49,11 +49,7 @@ function NotificationDropdown({navigate}) {
       <DropdownMenuTrigger><Bell className="cursor-pointer" size={20} /></DropdownMenuTrigger>
       <DropdownMenuContent className="absolute w-[calc(100vw-32px)] transform -translate-x-[100%] mx-4  mt-4
                                       sm:w-[362px] sm:mt-0">
-        {/* {notifications.map((notification, index) => ( */}
-          {/* <div key={index}> */}
             {<CardNotification picture="d" username="dwdwdw" Noti="q" over="111111"/> }
-          {/* </div> */}
-        {/* ))} */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

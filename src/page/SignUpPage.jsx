@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom";
 import LabelAndInput from "@/components/LabelAndInput";
 import useForm from "@/hooks/useForm";
-
+import { registerUser } from "@/services/auth/auth.mjs";
 
 
 
@@ -22,11 +22,14 @@ function SignUpPage (){
         }
     );
 
-    function registration (e) {
+    async function registration (e) {
         e.preventDefault();
+        try{
         if (form.validateForm()) { 
-            navigate("/sign-up/success");
+           const res = await registerUser({...form.values,role:"user"})
+           if (res){navigate("/sign-up/success");}
         }
+    }catch(error){console.log("❌"+error)}
     }
 
     return(

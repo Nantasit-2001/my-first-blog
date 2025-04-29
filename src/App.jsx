@@ -1,6 +1,3 @@
-
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { Toaster } from "@/components/ui/sonner"
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
@@ -22,9 +19,11 @@ import AdminEditCategoryPage from './page/Admin/AdminCatergory/AdminEditCategory
 import AdminProfilePage from './page/Admin/AdminProfilePage'
 import AdminNotificationPage from "./page/Admin/AdminNotificationPage"
 import AdminResetPasswordPage from './page/Admin/AdminResetPasswordPage'
+import { AuthProvider } from './context/Authcontext';
 function App() {
   return (
     <>
+  <AuthProvider>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<HomePage/>} />
@@ -54,6 +53,7 @@ function App() {
       </Routes>
     </BrowserRouter>  
     <Toaster />
+  </AuthProvider>
     </>
   )
 }

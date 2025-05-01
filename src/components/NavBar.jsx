@@ -94,10 +94,10 @@ function NavBar(){
 
    <nav className="w-full border-2 flex items-center justify-between py-4 px-8
                  lg:px-30">
-        <h3 className="text-black font-gray-600 text-2xl
-                            sm:text-2xl
-                            lg:text-3xl
-                            ">Nantasit</h3>
+        <h3 className="text-black font-gray-600 text-2xl sm:text-2xl lg:text-3xl cursor-pointer"
+            onClick={()=>navigate("/")}
+            >bb<span className='bg-green-500 rounded-full h-2 w-2 inline-block ml-1 mt-0'> </span>
+        </h3>
 
         {/* Mobile menu */}
         <div className='sm:hidden'>

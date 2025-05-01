@@ -5,16 +5,13 @@ import { axiosFetchPosts } from "@/services/postService";
 import { useNavigate } from "react-router-dom";
 
 import { Input } from "./ui/input"
-import { Database, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import {Select,
     SelectContent,
     SelectGroup,
     SelectItem,
     SelectLabel,
-    SelectScrollDownButton,
-    SelectScrollUpButton,
-    SelectSeparator,
     SelectTrigger,
     SelectValue,} from './ui/select';
     
@@ -58,7 +55,6 @@ function ArticleSection (){
         limit: 6 
       };
       const response = await axiosFetchPosts(params);
-      console.log(response)
       setDataBlogPost((prevPosts) => page === 1 ? response.data.posts : [...prevPosts, ...response.data.posts]);
       setHasMore(response.data.currentPage < response.data.totalPages);
     } catch (error) {

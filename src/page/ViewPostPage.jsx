@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useActionData, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { Toaster, toast } from 'sonner'
-import { axiosfetchPostById } from "@/services/postService";
-
+import { toast } from 'sonner'
+import { axiosfetchPostById,axiosLike } from "@/services/postService";
+import { useAuth } from "@/context/Authcontext";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import {
@@ -25,6 +25,7 @@ function ViewPostPage() {
     const navigate = useNavigate();
     const [content, setContent] = useState({});
     const [loading, setLoading] = useState(true);
+    const { loggedIn } = useAuth();
     const [alertCreateAccountState,setAlertCreateAccountState]=useState(false);
     useEffect(() => {
         async function getPost() {
@@ -34,8 +35,8 @@ function ViewPostPage() {
                 // const response = await axios.get(`https://blog-post-project-api.vercel.app/posts/${param.postId}`);
                 const tempContent ={...response.data.data} 
                 // const tempContent ={...response.data} 
-                console.log(tempContent)
                 setContent(tempContent);
+                // setLike({...like})
             } catch (error) {
                 console.error("Error fetching post_:", error);
             } finally {
@@ -66,10 +67,8 @@ function ViewPostPage() {
         )
     }
 
-    function LikeBar ({likes}){
-        
+    function LikeBar ({}){
         function copyToClipboard(text) {
-            console.log(text)
               navigator.clipboard.writeText(text)
                 .then(() => {
                     toast.custom((t) => (
@@ -102,16 +101,22 @@ function ViewPostPage() {
             );
         }
 
+        // console.log(content.likes_count)
         return(
             <div className="bg-[#EFEEEB] py-4 px-4 md:rounded-sm flex flex-col space-y-4 md:gap-16 md:flex-row md:items-center md:space-y-0 md:justify-between mb-10">
-                <button className="bg-white flex items-center justify-center space-x-2 px-11 py-3 rounded-full text-foreground border border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors group group-hover:text-muted-foreground font-medium"
-                    onClick={()=>setAlertCreateAccountState(true)}>
-                    <Smile strokeWidth={1.5} className="mr-2" />{likes}
+                <button className="bg-white flex items-center justify-center px-11 md:w-[160px]  py-3 rounded-full text-foreground border border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors group group-hover:text-muted-foreground font-medium"
+                    onClick={loggedIn ? async() => {
+                                        try{const res = await axiosLike({postId:param.postId})
+                                            res.data.liked===true?setContent({...content,likes_count:content.likes_count+1})
+                                                                 :setContent({...content,likes_count:content.likes_count-1})
+                                        }catch(e){console.log(e)}} 
+                                      : () => setAlertCreateAccountState(true)}>
+                    <Smile strokeWidth={1.5} className="mr-2" />{content.likes_count}
                 </button>
                 
                 <div className="flex flex-row gap-2">
                     <button className="bg-white flex flex-1 items-center justify-center space-x-2 px-11 py-3 rounded-full text-foreground border border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors font-medium group group-hover:text-muted-foreground"
-                        onClick={() => copyToClipboard(`http://localhost:5173/post/${param.postId}`)}>
+                        onClick={() => copyToClipboard(`${window.location.origin}/post/${param.postId}`)}>
                         <Copy strokeWidth={1.5} className="mr-2"/>Copy
                     </button>
                     <ShareButtons articleUrl={`https://blog-post-project-api.vercel.app/posts/${param.postId}`} />
@@ -138,9 +143,9 @@ function ViewPostPage() {
         )
     }
 
-    function AlertCreateAccount({ alertCreateAccountState, setAlertCreateAccountState }) {
+    function AlertCreateAccount({  isOpen, onClose }) {
   return (
-    <AlertDialog open={alertCreateAccountState} onOpenChange={setAlertCreateAccountState}>
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent className="bg-white rounded-md pt-16 pb-6 max-w-[26rem] sm:max-w-lg flex flex-col items-center">
         <AlertDialogTitle className="text-3xl font-semibold pb-2 text-center">
           Create an account to continue
@@ -164,15 +169,17 @@ function ViewPostPage() {
   );
 }
 const contentReactMarkdown = content.content;
-console.log(`"${contentReactMarkdown}"`);
-console.log("## 1. Vocal Communications\n\nExplore the various meows, purrs, and other vocalizations cats use to express themselves.\n\n## 2. Body Language\n\nLearn to read your cat's posture, tail position, and ear movements to understand their mood and intentions.\n\n## 3. Scent Marking\n\nDiscover why cats use scent to communicate and mark their territory.\n\n## 4. Facial Expressions\n\nUnderstand the subtle facial cues cats use to convey emotions and intentions.\n\n## 5. Interspecies Communication\n\nLearn how cats have adapted their communication methods to interact with humans and other animals.");
-console.log(`"${contentReactMarkdown}"`==="## 1. Vocal Communications\n\nExplore the various meows, purrs, and other vocalizations cats use to express themselves.\n\n## 2. Body Language\n\nLearn to read your cat's posture, tail position, and ear movements to understand their mood and intentions.\n\n## 3. Scent Marking\n\nDiscover why cats use scent to communicate and mark their territory.\n\n## 4. Facial Expressions\n\nUnderstand the subtle facial cues cats use to convey emotions and intentions.\n\n## 5. Interspecies Communication\n\nLearn how cats have adapted their communication methods to interact with humans and other animals.")
+// console.log(`"${contentReactMarkdown}"`);
+// console.log("## 1. Vocal Communications\n\nExplore the various meows, purrs, and other vocalizations cats use to express themselves.\n\n## 2. Body Language\n\nLearn to read your cat's posture, tail position, and ear movements to understand their mood and intentions.\n\n## 3. Scent Marking\n\nDiscover why cats use scent to communicate and mark their territory.\n\n## 4. Facial Expressions\n\nUnderstand the subtle facial cues cats use to convey emotions and intentions.\n\n## 5. Interspecies Communication\n\nLearn how cats have adapted their communication methods to interact with humans and other animals.");
+// console.log(`"${contentReactMarkdown}"`==="## 1. Vocal Communications\n\nExplore the various meows, purrs, and other vocalizations cats use to express themselves.\n\n## 2. Body Language\n\nLearn to read your cat's posture, tail position, and ear movements to understand their mood and intentions.\n\n## 3. Scent Marking\n\nDiscover why cats use scent to communicate and mark their territory.\n\n## 4. Facial Expressions\n\nUnderstand the subtle facial cues cats use to convey emotions and intentions.\n\n## 5. Interspecies Communication\n\nLearn how cats have adapted their communication methods to interact with humans and other animals.")
     return (
         <>
         <NavBar/>
-        <AlertCreateAccount alertCreateAccountState={alertCreateAccountState} 
-                                            setAlertCreateAccountState={setAlertCreateAccountState} />
-
+        <AlertCreateAccount
+            isOpen={alertCreateAccountState}
+            onClose={setAlertCreateAccountState}
+        />
+        
         <div className="max-w-7xl mx-auto space-y-8 container md:px-8 pb-20 md:pb-28 md:pt-8 lg:pt-16">
             <div className="space-y-4 md:px-4">
                 <img src={content.image}alt={content.title}
@@ -196,7 +203,7 @@ console.log(`"${contentReactMarkdown}"`==="## 1. Vocal Communications\n\nExplore
                         <h1 className="text-3xl font-bold">{content.title}</h1>
                         <p className="mt-4 mb-10">{content.description}</p>
                         <div className="markdown">
-                            <ReactMarkdown>{content.content}</ReactMarkdown>
+                            <ReactMarkdown>{contentReactMarkdown}</ReactMarkdown>
                             
                         </div>
                     </article>
@@ -206,7 +213,7 @@ console.log(`"${contentReactMarkdown}"`==="## 1. Vocal Communications\n\nExplore
                     </div>
 
                     <div className="md:px-4">                                      
-                        <LikeBar likes={content.likes}/>
+                        <LikeBar />
                         
                         <CommentBar/>
                     </div>

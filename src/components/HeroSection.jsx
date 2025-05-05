@@ -3,7 +3,7 @@ import PersonCat from "../assets/image/Person-cat.png";
 function HeroSection () {
     return(
       <>
-        <section className='flex flex-col items-center justify-evenly h-274.5  px-6 mt-5 mx-auto
+        <section className='flex flex-col items-center justify-evenly h-274.5  px-6 mt-5 mx-auto 
                             sm:flex-row sm:justify-between sm:h-100
                             lg:h-132 lg:max-w-300 '>
           <div className='sm:w-[28%] sm:flex sm:flex-col

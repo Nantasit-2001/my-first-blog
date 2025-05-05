@@ -12,22 +12,19 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from "@/context/Authcontext"; // Import useAuth อีกครั้งที่นี่
 
-function CurrentUser({ imageUrl, username }) {
+function CurrentUser({ user }) {
     return (
         <div className="flex items-center">
-            <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
+            <div className="w-12 h-12 rounded-full overflow-hidden mr-4">  
                 <img
-                    src={imageUrl}
-                    alt={username}
+                    src={user?.data?.profile_pic || "https://placehold.co/100x100?text=Profile"}
+                    alt={user?.data?.username}
+                    onError={(e) => { e.target.src = "https://placehold.co/100x100?text=Profile"; }}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "https://via.placeholder.com/40";
-                    }}
                 />
             </div>
             <div className="flex-1">
-                <h3 className="font-medium">{username||"Moodeng ja"}</h3>
+                <h3 className="font-medium">{user?.data?.username}</h3>
             </div>
         </div>
     );
@@ -86,10 +83,9 @@ function DropdownMenuItems({isAdmin,navigate,logout}) {
 }
 //-----------------------
 function NavBar(){
-    const { loggedIn,logout } = useAuth(); // ใช้ useContext ที่นี่
-    const [isAdmin,setisAdmin] = useState(true)
+    const { loggedIn,logout,user } = useAuth(); // ใช้ useContext ที่นี่
+    const isAdmin = user?.data?.role === "admin";
     const navigate = useNavigate()
-
     return(
 
    <nav className="w-full border-2 flex items-center justify-between py-4 px-8
@@ -113,10 +109,9 @@ function NavBar(){
         </DropdownMenuTrigger>
 
         {loggedIn ? (
-            <DropdownMenuContent className="w-screen flex flex-col mt-4 sm:hidden">
-                {/* User profile section */}
+            <DropdownMenuContent className="w-screen mr-4 flex flex-col mt-4 sm:hidden">
                 <div className="p-4 flex justify-between">
-                    <CurrentUser/>
+                    <CurrentUser user={user}/>
                     <NotificationDropdown navigate={navigate}/>
                 </div>
 
@@ -147,16 +142,13 @@ function NavBar(){
         loggedIn ?
         (
             <div className='hidden
-                                    sm:flex  gap-4'>
+                            sm:flex  gap-8 '>
                     <NotificationDropdown/>
                     <DropdownMenu>
-                        <DropdownMenuTrigger className='flex items-center cursor-pointer gap-2'>
-                            <CurrentUser/><ChevronUp size={16} className="rotate-180"/>
-
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="flex flex-col w-[250px]">
-
-                            {/* Menu items */}
+                        <DropdownMenuTrigger className='flex items-center cursor-pointer gap-4'>
+                            <CurrentUser user={user}/><ChevronUp size={16} className="rotate-180"/>
+                        </DropdownMenuTrigger>
+                            <DropdownMenuContent className="hidden sm:flex flex-col w-[250px] sm:mt-1 sm:mr-4 lg:mr-12 ">
                             <DropdownMenuItems isAdmin={isAdmin} navigate={navigate} logout={logout}/>
                         </DropdownMenuContent>
                     </DropdownMenu>

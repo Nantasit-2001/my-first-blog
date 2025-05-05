@@ -3,10 +3,13 @@ import { commonjs } from "globals";
 
 const API_URL = `${import.meta.env.VITE_API_URL}/profile`;
 
-export const axiosFetchUser = ()=>{
-  return axios.patch(API_URL)
-}
-
+export const axiosGetUser = () => {
+  return axios.get(API_URL, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+};
 export const axiosResetPassword = ({currentPassword, newPassword}) =>{
     return axios.patch(API_URL+"/reset-password",{currentPassword, newPassword},
         {
@@ -22,7 +25,6 @@ export const axiosResetProfile = ({ image, name, username }) => {
   formData.append("name", name);
   formData.append("username", username);
   formData.append("image", image);
-  console.log("---------------------")
   return axios.patch(API_URL + "/reset-profile", formData, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,

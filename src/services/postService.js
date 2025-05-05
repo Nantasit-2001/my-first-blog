@@ -13,6 +13,7 @@ export const axiosfetchPostById = ({postId}) => {
   return axios.get(`${API_URL}/${postId}`);
 };
 
+//patch /posts/:postId/like
 export const axiosLike = ({ postId }) => {
   return axios.patch(`${API_URL}/${postId}/like`, null, { // Changed, was missing the null for data
     headers: {
@@ -21,6 +22,21 @@ export const axiosLike = ({ postId }) => {
   });
 };
 
+//get /posts/:postId/comment
+export const axiosFetchComment = ({ postId }) => {
+
+  return axios.get(`${API_URL}/${postId}/comment`);
+}
+
+// POST /posts/:postId/comment
+export const axiosCreateComment = ( postId, comment) => {
+  return axios.post(`${API_URL}/${postId}/comment`,{comment},        
+    {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+}
 
 // POST /posts
 export const axioscreatePost = (postData) => {

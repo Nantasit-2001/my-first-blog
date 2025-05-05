@@ -16,7 +16,7 @@ const useForm = (initialValues, validate) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    return { values, errors, handleChange, validateForm };
+    return { values, errors, handleChange, validateForm, setErrors };
 };
 
 export default useForm;

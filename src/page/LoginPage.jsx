@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import showToast from "@/utils/showToast";
 import LabelAndInput from "@/components/LabelAndInput";
 import useForm from "@/hooks/useForm";
-
+import { loginUser } from "@/services/auth/auth.mjs";
+import { useAuth } from "@/context/Authcontext";
 function LoginPage (){
-   
+   const {loginWithToken}=useAuth()
     const navigate = useNavigate();
 
     const form =useForm({email:"",password:""},
@@ -19,9 +20,14 @@ function LoginPage (){
         }
     )
     
-    function login (e) {
+    async function login (e) {
         e.preventDefault();
-        if(form.validateForm()){navigate("/sign-up/success")}
+        if(form.validateForm()){
+         const res = await loginUser({...form.values})
+         loginWithToken(res.token)
+            if(res){navigate("/")}
+        }
+        
         else{showToast("bg-[#EB5164]","Your password is incorrect or this email doesn’t exist","Please try another password or email")}
     }    
 

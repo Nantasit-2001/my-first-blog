@@ -1,23 +1,19 @@
 import { useState,useEffect } from "react";
 import BlogCard from "./BlogCard";
-import blogPosts from "@/Data/blogPosts";
-import axios, { Axios } from "axios";
+import { axiosFetchPosts } from "@/services/postService";
+
 import { useNavigate } from "react-router-dom";
 
 import { Input } from "./ui/input"
-import { Database, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import {Select,
     SelectContent,
     SelectGroup,
     SelectItem,
     SelectLabel,
-    SelectScrollDownButton,
-    SelectScrollUpButton,
-    SelectSeparator,
     SelectTrigger,
     SelectValue,} from './ui/select';
-
     
     
 function ArticleSection (){
@@ -35,7 +31,13 @@ function ArticleSection (){
   
   async function searchKeyword() {
     try{
-      const tempSearchData = await axios.get( `https://blog-post-project-api.vercel.app/posts?keyword=${objSearchKeyword.searchInput}`)
+      const params = {
+        keyword: objSearchKeyword.searchInput,
+        page: 1, 
+        limit: 6, 
+        category: "" 
+      };
+      const tempSearchData = await axiosFetchPosts(params);
       setObjSearchKeyword((item)=>({...item,searchData:tempSearchData.data.posts}))
       
     }catch(error){
@@ -43,17 +45,20 @@ function ArticleSection (){
     }
   }
 
-  async function fetchPosts(){
+  async function fetchPosts() {
     setIsLoading(true);
     try {
-      const tempParams = selectedCategory === "Highlight" ? "" : selectedCategory;
-      const response = await axios.get("https://blog-post-project-api.vercel.app/posts", {
-        params: { page, limit: 6, category: tempParams }
-      });
-      setDataBlogPost(prevPosts => (page === 1 ? response.data.posts : [...prevPosts, ...response.data.posts]));
+      const params = {
+        category: selectedCategory, 
+        keyword: objSearchKeyword.searchInput, 
+        page: page, 
+        limit: 6 
+      };
+      const response = await axiosFetchPosts(params);
+      setDataBlogPost((prevPosts) => page === 1 ? response.data.posts : [...prevPosts, ...response.data.posts]);
       setHasMore(response.data.currentPage < response.data.totalPages);
     } catch (error) {
-      console.error("Error fetching posts: ", error);
+      console.log("❌----" + error);
     } finally {
       setIsLoading(false);
     }

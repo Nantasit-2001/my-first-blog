@@ -12,13 +12,15 @@ function Footer (){
                 <div className=" flex flex-row justify-end gap-4
                                 ">
         {/* Logo */}
-                    <div className =" w-6 h-6 rounded-full bg-[#43403B] flex justify-center items-center cursor-pointer">
-                        <Linkedin strokeWidth={1.5} className="w-4 h-4 text-[#EFEEEB] fill-white" />
-                    </div>
-                    <div className="relative w-[24px] h-[24px] rounded-full bg-[#43403B] cursor-pointer">
+                    <a href="https://www.linkedin.com/" className =" w-6 h-6 rounded-full bg-[#43403B] flex justify-center items-center cursor-pointer">
+                        <Linkedin strokeWidth={1.5} className="w-4 h-4 text-[#EFEEEB] fill-white"/>
+                    </a>
+                    <a href="https://github.com" className="relative w-[24px] h-[24px] rounded-full bg-[#43403B] cursor-pointer">
                         <Github className="w-5 h-5 text-[#EFEEEB] fill-white absolute top-[5.5px] left-[2.1px]" />
-                    </div>
-                    <img className="w-6 h-6 cursor-pointer" src={IconGoogle}/>
+                    </a>
+                    <a href="https://www.google.com">
+                        <img className="w-6 h-6 cursor-pointer" src={IconGoogle}/>
+                    </a>
                 </div>
             </div>
             <button className="underline text-base cursor-pointer" onClick={()=>navigate("/")}>Home page</button>

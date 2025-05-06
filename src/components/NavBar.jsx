@@ -74,7 +74,7 @@ function DropdownMenuItems({isAdmin,navigate,logout}) {
                     </div>
                 </DropdownMenuItem>:undefined}
             <DropdownMenuItem className="flex items-center p-4 font-medium hover:bg-gray-100 border-t border-gray-200 pl-10 cursor-pointer sm:pl-4"
-                                        onClick={() => {logout();}}>
+                                        onClick={() => {logout(); navigate("/")}}>
                 <LogOut className='transform rotate-180'/>
                 Log out
             </DropdownMenuItem>

@@ -10,6 +10,7 @@ import { useState, useRef } from "react"
 
 function ProfilePage () {
   const [preview, setPreview] = useState(null);
+  const [loadingSend,setLoadingSend] = useState(false)
   const fileInputRef = useRef();
 
   const form = useForm(
@@ -29,6 +30,7 @@ async function changeProfile(e) {
   e.preventDefault();
   if (form.validateForm()) {
     try {
+      setLoadingSend(true);
       await axiosResetProfile({
         image: form.values.image,
         name: form.values.name,
@@ -43,6 +45,7 @@ async function changeProfile(e) {
       }
       console.log(e);
     }
+    finally{setLoadingSend(false)}
   }
 }
 
@@ -100,7 +103,6 @@ async function changeProfile(e) {
             </div>
           </div>
 
-          {/* Profile Form */}
           <div className="bg-[#EFEEEB] flex flex-col px-4 pt-4 w-full pb-6 sm:rounded-lg sm:pb-4 md:max-h-[652px] md:max-w-[550px] md:pl-10 md:pt-5">
             <div className="flex flex-col gap-3 justify-between items-center md:flex-row md:justify-normal">
               <img className="w-24 h-24 md:w-30 md:h-30 rounded-[99px]" src={preview || picturrr} alt="profile" />
@@ -142,8 +144,8 @@ async function changeProfile(e) {
                   <h4 className="pb-3 pt-2 pl-4">moodeng.cute@gmail.com</h4>
                 </div>
               </div>
-              <Button variant="blackButton" className="w-30 px-10 py-6 mt-2" type="submit">
-                Save
+              <Button variant="blackButton" className={`w-30 px-10 py-6 mt-2 ${loadingSend?"bg-gray-500 ":null}`} type="submit" disabled={loadingSend}>
+                {loadingSend?"Sending...":"Save"}
               </Button>
             </form>
           </div>

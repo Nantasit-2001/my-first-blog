@@ -1,15 +1,17 @@
 import NavBar from "@/components/NavBar"
 import { Button } from "@/components/ui/button"
-import { X, UserRound, RotateCcw } from "lucide-react"
+import { UserRound, RotateCcw } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import LabelAndInput from "@/components/LabelAndInput"
 import { useState } from "react"
 import useForm from "@/hooks/useForm"
 import AlertDialogBox from "@/components/AlertDialog"
 import { axiosResetPassword } from "@/services/userService"
+import showToast from "@/utils/showToast"
 
 function ResetPasswordPage () {
     const [alertResetPasswordState, setAlertResetPasswordState] = useState(false);
+    const [loadingSend,setLoadingSend] = useState(false)
     const navigate = useNavigate();
     const form = useForm({currentPassword:"",newPassword:"",confirm:""},
     (values)=>{
@@ -30,16 +32,20 @@ function ResetPasswordPage () {
 
       async function ResetPassword() {
         try {
+          setLoadingSend(true)
           setAlertResetPasswordState(false);
           await axiosResetPassword({ currentPassword: form.values.currentPassword,newPassword: form.values.newPassword,});
-          navigate("/");
+          // navigate("/");
+          showToast("bg-[#12B279]", "Reset Password", "Your password has been successfully updated");
         } catch (err) {
           if (err.response.data?.field === "currentPassword"){
+            showToast("bg-[#fb2c36]", "Reset Password", "Current password is incorrect.");
             form.setErrors((prev) => ({ ...prev, currentPassword: "Password is incorrect." }));
           } else {
             console.error("❌ Unknown error:", err);
+            showToast("bg-[#fb2c36]", "Reset Password error", "error");
           }
-        }
+        }finally{setLoadingSend(false)}
       }
     return(
         <>
@@ -93,8 +99,8 @@ function ResetPasswordPage () {
                                         type="password" 
                                         form={form}/>
                         </div>
-                        <Button variant="blackButton" className=" px-10 py-6 mt-10 "
-                            type="submit">Reset password</Button>
+                        <Button variant="blackButton" className={` px-10 py-6 mt-10 ${loadingSend?"bg-gray-300 ":null} `}
+                            type="submit">{loadingSend?"Resetting":"Reset password"}</Button>
                     </form>
                 </div>
             </div>

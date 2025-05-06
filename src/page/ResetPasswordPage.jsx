@@ -8,10 +8,12 @@ import useForm from "@/hooks/useForm"
 import AlertDialogBox from "@/components/AlertDialog"
 import { axiosResetPassword } from "@/services/userService"
 import showToast from "@/utils/showToast"
+import { useAuth } from "@/context/Authcontext"
 
 function ResetPasswordPage () {
     const [alertResetPasswordState, setAlertResetPasswordState] = useState(false);
     const [loadingSend,setLoadingSend] = useState(false)
+    const {user}=useAuth()
     const navigate = useNavigate();
     const form = useForm({currentPassword:"",newPassword:"",confirm:""},
     (values)=>{
@@ -29,7 +31,6 @@ function ResetPasswordPage () {
           setAlertResetPasswordState(true);
         }
       }
-
       async function ResetPassword() {
         try {
           setLoadingSend(true)
@@ -69,9 +70,11 @@ function ResetPasswordPage () {
                 <div className=" md:flex md:relative ">
                     <div className="flex items-center py-6 pl-4 gap-3 
                                 md:p-0 md:absolute top-[-90px] md:left-0  md:w-[500px] ">
-                      <img className="w-10 h-10 rounded-[99px] md:w-15 md:h-15" src="d" alt="profile" />
+                      <img className="w-10 h-10 rounded-[99px] md:w-15 md:h-15" 
+                            src={user?.data?.profile_pic || "https://placehold.co/100x100?text=Profile"} 
+                            alt={user?.data?.username}/>
                       <div className="flex flex-row w-full ">
-                          <h4 className="pr-4 border-r-2 text-xl font-bold text-[#75716B] md:text-24px">Moodeng ja</h4>
+                          <h4 className="pr-4 border-r-2 text-xl font-bold text-[#75716B] md:text-24px">{user?.data?.username}</h4>
                           <h4 className="w-3/5 md:w-auto pl-4 text-xl font-medium md:text-24px ">Reset password</h4>
                       </div>
                     </div> 

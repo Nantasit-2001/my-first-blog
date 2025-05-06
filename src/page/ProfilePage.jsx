@@ -7,14 +7,16 @@ import useForm from "@/hooks/useForm"
 import { useNavigate } from "react-router-dom"
 import { axiosResetProfile } from "@/services/userService"
 import { useState, useRef } from "react"
+import { useAuth } from "@/context/Authcontext"
 
 function ProfilePage () {
   const [preview, setPreview] = useState(null);
   const [loadingSend,setLoadingSend] = useState(false)
+  const {user}=useAuth()
   const fileInputRef = useRef();
 
   const form = useForm(
-    { image: "", name: "", username: "" },
+    { image: "", name:user?.data?.name, username:user?.data?.username },
     (values) => {
       let textError = {};
       if (!values.name.trim()) textError.name = "Name cannot be empty.";
@@ -24,7 +26,7 @@ function ProfilePage () {
   );
 
   const navigate = useNavigate();
-  const picturrr = "https://placehold.co/100x100?text=Profile"; // default profile
+  const picturrr = user?.data?.profile_pic || "https://placehold.co/100x100?text=Profile"; // default profile
 
 async function changeProfile(e) {
   e.preventDefault();
@@ -85,7 +87,7 @@ async function changeProfile(e) {
             <div className="flex items-center py-6 pl-4 gap-3 md:p-0 md:absolute top-[-90px] md:left-0 md:w-[500px]">
               <img className="w-10 h-10 rounded-[99px] md:w-15 md:h-15" src={preview || picturrr} alt="profile" />
               <div className="flex flex-row">
-                <h4 className="pr-4 border-r-2 text-xl font-bold text-[#75716B] md:text-24px">Moodeng ja</h4>
+                <h4 className="pr-4 border-r-2 text-xl font-bold text-[#75716B] md:text-24px">{user?.data?.username}</h4>
                 <h4 className="pl-4 text-xl font-medium md:text-24px">Profile</h4>
               </div>
             </div>
@@ -141,7 +143,7 @@ async function changeProfile(e) {
                 />
                 <div className="text-[#b1b0ac]">
                   <h4 className="pl-2">Email</h4>
-                  <h4 className="pb-3 pt-2 pl-4">moodeng.cute@gmail.com</h4>
+                  <h4 className="pb-3 pt-2 pl-4">{user?.data?.email}</h4>
                 </div>
               </div>
               <Button variant="blackButton" className={`w-30 px-10 py-6 mt-2 ${loadingSend?"bg-gray-500 ":null}`} type="submit" disabled={loadingSend}>

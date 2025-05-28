@@ -1,15 +1,19 @@
 import NavBar from "@/components/NavBar"
 import { Button } from "@/components/ui/button"
-import { X, UserRound, RotateCcw } from "lucide-react"
+import { UserRound, RotateCcw } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import LabelAndInput from "@/components/LabelAndInput"
 import { useState } from "react"
 import useForm from "@/hooks/useForm"
 import AlertDialogBox from "@/components/AlertDialog"
 import { axiosResetPassword } from "@/services/userService"
+import showToast from "@/utils/showToast"
+import { useAuth } from "@/context/Authcontext"
 
 function ResetPasswordPage () {
     const [alertResetPasswordState, setAlertResetPasswordState] = useState(false);
+    const [loadingSend,setLoadingSend] = useState(false)
+    const {user}=useAuth()
     const navigate = useNavigate();
     const form = useForm({currentPassword:"",newPassword:"",confirm:""},
     (values)=>{
@@ -27,19 +31,22 @@ function ResetPasswordPage () {
           setAlertResetPasswordState(true);
         }
       }
-
       async function ResetPassword() {
         try {
+          setLoadingSend(true)
           setAlertResetPasswordState(false);
           await axiosResetPassword({ currentPassword: form.values.currentPassword,newPassword: form.values.newPassword,});
-          navigate("/");
+          // navigate("/");
+          showToast("bg-[#12B279]", "Reset Password", "Your password has been successfully updated");
         } catch (err) {
           if (err.response.data?.field === "currentPassword"){
+            showToast("bg-[#fb2c36]", "Reset Password", "Current password is incorrect.");
             form.setErrors((prev) => ({ ...prev, currentPassword: "Password is incorrect." }));
           } else {
             console.error("❌ Unknown error:", err);
+            showToast("bg-[#fb2c36]", "Reset Password error", "error");
           }
-        }
+        }finally{setLoadingSend(false)}
       }
     return(
         <>
@@ -63,9 +70,11 @@ function ResetPasswordPage () {
                 <div className=" md:flex md:relative ">
                     <div className="flex items-center py-6 pl-4 gap-3 
                                 md:p-0 md:absolute top-[-90px] md:left-0  md:w-[500px] ">
-                      <img className="w-10 h-10 rounded-[99px] md:w-15 md:h-15" src="d" alt="profile" />
+                      <img className="w-10 h-10 rounded-[99px] md:w-15 md:h-15" 
+                            src={user?.data?.profile_pic || "https://placehold.co/100x100?text=Profile"} 
+                            alt={user?.data?.username}/>
                       <div className="flex flex-row w-full ">
-                          <h4 className="pr-4 border-r-2 text-xl font-bold text-[#75716B] md:text-24px">Moodeng ja</h4>
+                          <h4 className="pr-4 border-r-2 text-xl font-bold text-[#75716B] md:text-24px">{user?.data?.username}</h4>
                           <h4 className="w-3/5 md:w-auto pl-4 text-xl font-medium md:text-24px ">Reset password</h4>
                       </div>
                     </div> 
@@ -93,8 +102,8 @@ function ResetPasswordPage () {
                                         type="password" 
                                         form={form}/>
                         </div>
-                        <Button variant="blackButton" className=" px-10 py-6 mt-10 "
-                            type="submit">Reset password</Button>
+                        <Button variant="blackButton" className={` px-10 py-6 mt-10 ${loadingSend?"bg-gray-300 ":null} `}
+                            type="submit">{loadingSend?"Resetting":"Reset password"}</Button>
                     </form>
                 </div>
             </div>

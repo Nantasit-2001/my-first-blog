@@ -20,6 +20,7 @@ import AdminProfilePage from './page/Admin/AdminProfilePage'
 import AdminNotificationPage from "./page/Admin/AdminNotificationPage"
 import AdminResetPasswordPage from './page/Admin/AdminResetPasswordPage'
 import { AuthProvider } from './context/Authcontext';
+import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   return (
     <>
@@ -31,10 +32,11 @@ function App() {
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-up/success" element={<SignUpSuccessPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage/>}/>
+
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+        <Route path="/reset-password" element={<ProtectedRoute><ResetPasswordPage/></ProtectedRoute>}/>
         
-        
+
         <Route path="/AdminLoginPage" element={<AdminLoginPage/>}/>
         <Route path="/AdminArticlePage" element={<AdminArticlePage/>}/>
         <Route path='/AdminCreateArticlePage' element={<AdminCreateArticlePage/>}/>

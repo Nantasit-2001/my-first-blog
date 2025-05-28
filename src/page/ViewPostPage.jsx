@@ -149,6 +149,7 @@ function ViewPostPage() {
         const handleSubmit = async () => {
             if (!commentText.trim()) {
               console.log("Comment cannot be empty.");
+              seterror("Comment cannot be empty.")
               return;
             }
             const temp= await axiosCreateComment( param.postId , commentText)
@@ -166,8 +167,9 @@ function ViewPostPage() {
                         className="border-2 rounded-lg w-full text-lg text-[#75716B] p-4"
                         onClick={loggedIn ? null : () => setAlertCreateAccountState(true)}
                         value={commentText}
-                        onChange={(e)=>setCommentText(e.target.value)}
+                        onChange={(e)=>{seterror(""); setCommentText(e.target.value)}}
                     />
+                    {error?<span className="ml-2 text-red-500">{error}</span>:null}
                     <div className="w-full flex sm:justify-end ">
                         <button className=" border-2 bg-[#000000] text-lg py-4 px-12 mt-2 text-white font-semibold rounded-[50px]"
                         onClick={loggedIn ? async()=>{ handleSubmit()}

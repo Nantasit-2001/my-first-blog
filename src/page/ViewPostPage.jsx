@@ -64,8 +64,6 @@ function ViewPostPage() {
       }, [param.postId]);
       
 
-
-
     function AuthorInfo (){
         return(
         <>
@@ -120,7 +118,6 @@ function ViewPostPage() {
             );
         }
         
-        // console.log(content.likes_count)
         return(
             <div className="bg-[#EFEEEB] py-4 px-4 md:rounded-sm flex flex-col space-y-4 md:gap-16 md:flex-row md:items-center md:space-y-0 md:justify-between mb-10">
                 <button className="bg-white flex items-center justify-center px-11 md:w-[160px]  py-3 rounded-full text-foreground border border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors group group-hover:text-muted-foreground font-medium"
@@ -219,10 +216,7 @@ function ViewPostPage() {
     </AlertDialog>
   );
 }
-const contentReactMarkdown = content.content;
-// console.log(`"${contentReactMarkdown}"`);
-// console.log("## 1. Vocal Communications\n\nExplore the various meows, purrs, and other vocalizations cats use to express themselves.\n\n## 2. Body Language\n\nLearn to read your cat's posture, tail position, and ear movements to understand their mood and intentions.\n\n## 3. Scent Marking\n\nDiscover why cats use scent to communicate and mark their territory.\n\n## 4. Facial Expressions\n\nUnderstand the subtle facial cues cats use to convey emotions and intentions.\n\n## 5. Interspecies Communication\n\nLearn how cats have adapted their communication methods to interact with humans and other animals.");
-// console.log(`"${contentReactMarkdown}"`==="## 1. Vocal Communications\n\nExplore the various meows, purrs, and other vocalizations cats use to express themselves.\n\n## 2. Body Language\n\nLearn to read your cat's posture, tail position, and ear movements to understand their mood and intentions.\n\n## 3. Scent Marking\n\nDiscover why cats use scent to communicate and mark their territory.\n\n## 4. Facial Expressions\n\nUnderstand the subtle facial cues cats use to convey emotions and intentions.\n\n## 5. Interspecies Communication\n\nLearn how cats have adapted their communication methods to interact with humans and other animals.")
+const contentReactMarkdown = content?.content?.replace(/\\n/g, '\n') || "";
     return (
         <>
         <NavBar/>
@@ -254,8 +248,7 @@ const contentReactMarkdown = content.content;
                         <h1 className="text-3xl font-bold">{content.title}</h1>
                         <p className="mt-4 mb-10">{content.description}</p>
                         <div className="markdown">
-                            <ReactMarkdown>{contentReactMarkdown}</ReactMarkdown>
-                            
+                                <ReactMarkdown>{contentReactMarkdown}</ReactMarkdown>
                         </div>
                     </article>
 

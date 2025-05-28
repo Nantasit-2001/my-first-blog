@@ -8,7 +8,7 @@ const AdminResponsiveSidebar = ({pageNow}) => {
 
   return (
     <>
-      <div className="top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl xl:hidden">
+      <div className="top-8 left-3 fixed p-1 bg-gray-300 rounded-3xl xl:hidden z-100">
         <ChevronRight onClick={() => setIsOpen(true)} />
         <SlideInPanel
           pageNow={pageNow}

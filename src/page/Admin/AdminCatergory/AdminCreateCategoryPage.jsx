@@ -3,6 +3,7 @@ import LabelAndInput from "@/components/LabelAndInput"
 import AdminPageHeader from "@/components/AdminPageHeader";
 import showToast from "@/utils/showToast";
 import useForm from "@/hooks/useForm"
+import { axiospostCategory } from "@/services/categoryService";
 import { useNavigate } from "react-router-dom";
 function AdminCreateCategoryPage (){
     const navigate = useNavigate()
@@ -13,8 +14,10 @@ function AdminCreateCategoryPage (){
         return textErrors;
         }
     )
-    function CreateCategory (){
+
+    async function CreateCategory (){
         if(form.validateForm()){navigate('/AdminCategoryPage')
+        await axiospostCategory(form.values.Category)
         showToast("bg-[#12B279]","Create category","Category has been successfully created.")
         }
         else console.log("error")

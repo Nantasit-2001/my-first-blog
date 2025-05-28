@@ -3,18 +3,22 @@ import AdminResponsiveSidebar from "@/components/AdminResponsiveSidebar";
 import AdminPageHeader from "@/components/AdminPageHeader";
 import showToast from "@/utils/showToast";
 import useForm from "@/hooks/useForm"
-import { useNavigate } from "react-router-dom";
-function AdminEditCategoryPage (){
+import { useNavigate,useParams } from "react-router-dom";
+import { axiosUpdateCategory } from "@/services/categoryService";
+
+function AdminEditCategoryPage (){        
+    const { categoryId } = useParams();
     const navigate = useNavigate()
-    const form =useForm({Category:""},
+    const form =useForm({Category:categoryId},
         (values)=>{
             let textErrors = {}
             if(values.Category==="")textErrors.Category = "Category name empty";
         return textErrors;
         }
     )
-    function EditCategory (){
+    async function EditCategory (){
         if(form.validateForm()){
+            await axiosUpdateCategory(categoryId,form.values.Category)
             navigate('/AdminCategoryPage')
             showToast("bg-[#12B279]","Edit category","Category has been successfully Edit.")
             }

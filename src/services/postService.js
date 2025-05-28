@@ -28,6 +28,11 @@ export const axiosCreateComment = ( postId, comment) => {
   return API_Auth.post(`${API_URL}/${postId}/comment`,{comment});
 }
 
+
+
+
+
+//Admin
 // POST /posts
 export const axioscreatePost = (postData) => {
   return API_Auth.post(API_URL, postData);
@@ -40,5 +45,5 @@ export const axiosupdatePost = (postId, updatedData) => {
 
 // DELETE /posts/:postId
 export const axiosdeletePost = (postId) => {
-  return API_Auth.delete(`${API_URL}/${postId}`);
+  return API_Auth.delete(`${API_URL}`,{params: { postId }});
 };

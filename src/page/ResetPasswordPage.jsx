@@ -44,7 +44,7 @@ function ResetPasswordPage () {
             form.setErrors((prev) => ({ ...prev, currentPassword: "Password is incorrect." }));
           } else {
             console.error("❌ Unknown error:", err);
-            showToast("bg-[#fb2c36]", "Reset Password error", "error");
+            showToast("bg-[#fb2c36]", "Reset Password error", "Please verify the accuracy or try again at another time.");
           }
         }finally{setLoadingSend(false)}
       }

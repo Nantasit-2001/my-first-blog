@@ -40,11 +40,11 @@ function App() {
         <Route path="/AdminLoginPage" element={<AdminLoginPage/>}/>
         <Route path="/AdminArticlePage" element={<AdminArticlePage/>}/>
         <Route path='/AdminCreateArticlePage' element={<AdminCreateArticlePage/>}/>
-        <Route path='/AdminEditArticlePage' element={<AdminEditArticlePage/>}/>
+        <Route path='/AdminEditArticlePage/:postId' element={<AdminEditArticlePage/>}/>
         
         <Route path='/AdminCategoryPage' element={<AdminCategoryPage/>}/>
         <Route path='/AdminCreateCategoryPage' element={<AdminCreateCategoryPage/>}/>
-        <Route path='/AdminEditCategoryPage' element={<AdminEditCategoryPage/>}/>
+        <Route path='/AdminEditCategoryPage/:categoryId' element={<AdminEditCategoryPage/>}/>
 
         <Route path='/AdminProfilePage' element={<AdminProfilePage/>}/>
         <Route path='/AdminNotificationPage' element={<AdminNotificationPage/>}/>

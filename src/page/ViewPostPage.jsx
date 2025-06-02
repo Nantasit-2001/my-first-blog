@@ -18,8 +18,6 @@ import {
 
 import {Linkedin,Facebook,Twitter,Copy,Smile,X} from "lucide-react";
 
-import PersonCat from "../assets/image/Person-cat.png"
-
 function ViewPostPage() {
     const param = useParams();
     const navigate = useNavigate();
@@ -35,10 +33,8 @@ function ViewPostPage() {
             try {
                 const postId=param.postId 
                 const response = await axiosfetchPostById({postId})
-                // const response = await axios.get(`https://blog-post-project-api.vercel.app/posts/${param.postId}`);
-                const tempContent ={...response.data.data} 
-                // const tempContent ={...response.data} 
-                setContent(tempContent);
+                console.log(response.data.data)
+                setContent(response.data.data);
                 // setLike({...like})
             } catch (error) {
                 console.error("Error fetching post_:", error);
@@ -69,16 +65,15 @@ function ViewPostPage() {
         <>
          <div className="bg-[#EFEEEB] rounded-3xl p-6">
             <div className="flex flex-row items-center mb-4">
-                <img src={PersonCat} className="w-16 h-16 rounded-full overflow-hidden mr-4"/>
+                <img src={content.author_profile_pic} className="w-16 h-16 rounded-full overflow-hidden mr-4"/>
                 <div>
-                    <span>Auter</span>
-                    <h1 className="text-2xl font-bold">{content.author}</h1>
+                    <span className="text-[14px]">Auter</span>
+                    <h1 className="text-[18px] font-bold">{content.author_name}</h1>
                 </div>
             </div>
             <hr className="border-gray-300 mb-4" />
-            <div className="text-muted-foreground space-y-4 ">
-                <p>I am a pet enthusiast and freelance writer who specializes in animal behavior and care. With a deep love for cats, I enjoy sharing insights on feline companionship and wellness.</p>
-                <p>When i’m not writing, I spends time volunteering at my local animal shelter, helping cats find loving homes</p>
+            <div className="text-muted-foreground space-y-4 font-semibold "style={{ whiteSpace: 'pre-line'}}>
+                {content.bio}
             </div>    
         </div>
         </>

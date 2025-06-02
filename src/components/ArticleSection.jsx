@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import BlogCard from "./BlogCard";
 import { axiosFetchPosts } from "@/services/postService";
-
+import { axiosgetCategory } from "@/services/categoryService";
 import { useNavigate } from "react-router-dom";
 
 import { Input } from "./ui/input"
@@ -17,7 +17,7 @@ import {Select,
     
     
 function ArticleSection (){
-  const categories = ["Highlight", "Cat", "Inspiration", "General"];
+  const [categories,setCategory] = useState([" "])
   const [selectedCategory,setSelectedCategory] = useState(categories[0])
   const [dataBlogPost,setDataBlogPost] = useState([])
   const [page,setPage] = useState(1)
@@ -28,6 +28,16 @@ function ArticleSection (){
   const navigate =useNavigate();
   useEffect(()=>{fetchPosts()},[selectedCategory,page])
   useEffect(()=>{searchKeyword()},[objSearchKeyword.searchInput])
+  useEffect(()=>{
+    async function  fetchCategory() {
+      let tempCategory = await axiosgetCategory()
+      tempCategory = tempCategory.data.map(item => item.name);
+      tempCategory.unshift("Highlight");
+      setCategory(tempCategory)
+      setSelectedCategory("Highlight")
+    }
+    fetchCategory()
+  },[])
   
   async function searchKeyword() {
     try{
@@ -55,7 +65,9 @@ function ArticleSection (){
         limit: 6 
       };
       const response = await axiosFetchPosts(params);
+      console.log(response,"==========================")
       setDataBlogPost((prevPosts) => page === 1 ? response.data.posts : [...prevPosts, ...response.data.posts]);
+      console.log(response.data)
       setHasMore(response.data.currentPage < response.data.totalPages);
     } catch (error) {
       console.log("❌----" + error);
@@ -86,8 +98,8 @@ function ArticleSection (){
                                     sm:text-base lg:text-xl"/>
                 <Search color="gray" 
                         strokeWidth={2} 
-                        className="absolute size-5 inset-y-4 right-2 
-                                   sm:size-4 lg:size-5"/>
+                        className={`absolute size-5 inset-y-4 right-2 
+                                   sm:size-4 lg:size-5 ${objSearchKeyword.searchInput!==""&& "hidden"}`}/>
             {objSearchKeyword.openDropDown?
             <div className="absolute bg-white z-99"> 
             {objSearchKeyword.searchData.map((item,index)=>
@@ -120,7 +132,7 @@ function ArticleSection (){
                 </Select>
             </div>
 
-            <div className="hidden sm:flex sm:justify-around text-gray-500 lg:gap-6">
+            <div className="hidden sm:flex sm:justify-around text-gray-500 lg:gap-6 ">
                   {categories.map(categorie=>
                         <Button key={categorie} 
                                 variant="LatestArticles"
@@ -143,7 +155,8 @@ function ArticleSection (){
                         category={blogPost.category}
                         title={blogPost.title}
                         description={blogPost.description}
-                        author={blogPost.author}
+                        author_profile_pic={blogPost.author_profile_pic}
+                        author_name={blogPost.author_name}
                         date={new Date(blogPost.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
               />)}
           </div>

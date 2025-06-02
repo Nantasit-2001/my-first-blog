@@ -11,10 +11,10 @@ function CommentCard({ author, avatarUrl, date, text }) {
         className="w-12 h-12 rounded-full mr-2 object-cover" />
         <div className="flex flex-col">
           <span className="font-bold text-md text-gray-800">{author}</span>
-          <span className="text-xs text-gray-500">{formattedDate}</span>
+          <span className="text-xs text-gray-500" >{formattedDate}</span>
         </div>
       </div>
-      <p className="text-md text-gray-700 leading-relaxed mb-10">{text}</p>
+      <p className="text-md text-gray-700 leading-relaxed mb-10" style={{ whiteSpace: 'pre-line'}}>{text}</p>
     </div>
   );
 }

@@ -20,7 +20,7 @@ import AdminProfilePage from './page/Admin/AdminProfilePage'
 import AdminNotificationPage from "./page/Admin/AdminNotificationPage"
 import AdminResetPasswordPage from './page/Admin/AdminResetPasswordPage'
 import { AuthProvider } from './context/Authcontext';
-import ProtectedRoute from './components/ProtectedRoute';
+import {ProtectedRoute,ProtectedRouteAdmin } from './components/ProtectedRoute';
 function App() {
   return (
     <>
@@ -36,20 +36,20 @@ function App() {
         <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
         <Route path="/reset-password" element={<ProtectedRoute><ResetPasswordPage/></ProtectedRoute>}/>
         
+       <Route path="/AdminLoginPage" element={<AdminLoginPage />} />
 
-        <Route path="/AdminLoginPage" element={<AdminLoginPage/>}/>
-        <Route path="/AdminArticlePage" element={<AdminArticlePage/>}/>
-        <Route path='/AdminCreateArticlePage' element={<AdminCreateArticlePage/>}/>
-        <Route path='/AdminEditArticlePage/:postId' element={<AdminEditArticlePage/>}/>
-        
-        <Route path='/AdminCategoryPage' element={<AdminCategoryPage/>}/>
-        <Route path='/AdminCreateCategoryPage' element={<AdminCreateCategoryPage/>}/>
-        <Route path='/AdminEditCategoryPage/:categoryId' element={<AdminEditCategoryPage/>}/>
-
-        <Route path='/AdminProfilePage' element={<AdminProfilePage/>}/>
-        <Route path='/AdminNotificationPage' element={<AdminNotificationPage/>}/>
-        <Route path='/AdminResetPasswordPage' element={<AdminResetPasswordPage/>}/>
-
+  {/* หน้าเฉพาะ admin ที่ login แล้ว */}
+  <Route element={<ProtectedRouteAdmin />}>
+    <Route path="/AdminArticlePage" element={<AdminArticlePage />} />
+    <Route path="/AdminCreateArticlePage" element={<AdminCreateArticlePage />} />
+    <Route path="/AdminEditArticlePage/:postId" element={<AdminEditArticlePage />} />
+    <Route path="/AdminCategoryPage" element={<AdminCategoryPage />} />
+    <Route path="/AdminCreateCategoryPage" element={<AdminCreateCategoryPage />} />
+    <Route path="/AdminEditCategoryPage/:categoryId" element={<AdminEditCategoryPage />} />
+    <Route path="/AdminProfilePage" element={<AdminProfilePage />} />
+    <Route path="/AdminNotificationPage" element={<AdminNotificationPage />} />
+    <Route path="/AdminResetPasswordPage" element={<AdminResetPasswordPage />} />
+  </Route>
         <Route path="*" element={<NotFoundPage/>} />
       
       </Routes>

@@ -34,8 +34,25 @@ export const loginUser = async (formData) => {
         }
 };
 
+export const loginAdmin = async (formData) => {
+    try {
+        const response = await API_Auth.post('/auth/loginAdmin', formData);
+        if (response.status === 200) {
+            return response.data;          
+        }if(response.status === 403) {
+            alert("Access denied: Admins only");
+        }else {
+            alert("Login failed!");
+        }   
+    } catch (error) {
+        console.error("❌ Login error:", error);
+        alert("Email or password incorrect!");
+        }
+};
+
 export function isAuthenticated() {
     const token = localStorage.getItem('token');
     return !!token; // มี token คืน true, ไม่มี คืน false
   }
   
+  // TODO context มีปัญหา

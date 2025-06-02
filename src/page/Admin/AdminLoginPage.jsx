@@ -4,10 +4,12 @@ import { X } from "lucide-react";
 import { toast } from 'sonner'
 import LabelAndInput from "@/components/LabelAndInput";
 import useForm from "@/hooks/useForm";
-
+import { loginAdmin } from "@/services/auth/auth.mjs";
+import { useAuth } from "@/context/Authcontext";
 function AdminLoginPage (){
     const navigate = useNavigate();
-
+    const {loginWithToken}=useAuth()
+    const { loggedIn, user, loading } = useAuth();
     const form =useForm({email:"",password:""},
         (values)=>{
             let textErrors = {}
@@ -18,23 +20,24 @@ function AdminLoginPage (){
         }
     )
     
-    function showToast() {
-        toast.custom((t) => (
-            <div className="hidden md:flex bg-[#EB5164] text-white p-6 rounded-lg relative pr-10 w-[700px]">
-                <div>
-                    <h2 className="text-xl font-bold mb-2">Your password is incorrect or this email doesn’t exist</h2>
-                    <p className="text-sm">Please try another password or email</p>
-                </div>
-                <span onClick={() => toast.dismiss(t)}><X className="cursor-pointer absolute top-4 right-4" /></span>
-            </div>
-        ));
+   async function login(e) {
+  e.preventDefault();
+
+  if (!form.validateForm()) {
+    return;
+  }
+
+  try {
+    const res = await loginAdmin({ ...form.values });
+    if (res?.token) {
+      await loginWithToken(res.token);
+      console.log(loggedIn, user?.data?.role, loading )
+      navigate("/AdminArticlePage");
     }
-    
-    function login (e) {
-        e.preventDefault();
-        if(form.validateForm()){navigate("/AdminArticlePage")}
-            else{showToast()}
-    }    
+  } catch (err) {
+    console.error(err);
+  }
+}
 
     return(
         <>

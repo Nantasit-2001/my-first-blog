@@ -13,18 +13,18 @@ function HeroSection () {
                           lg:text-[49px]  lg:leading-[55px]'
                           >Stay Informed,<br/> Stay Inspired</h1>
             <p className='text-[16px] text-center text-[#75716B] p-5
-                          sm:text-end 
+                          sm:text-end  font-semibold
                           '>Discover a World of Knowledge at Your Fingertips. Your Daily Dose of Inspiration and Information.</p>
           </div>
           <img className='h-auto sm:w-[30%]' src={PersonCat}/>
           <div className='sm:w-[35%] sm:h-[284px]
                           lg:w-[28%]'>
-              <h6 className='text-[12px] text-[#75716B]'>-Author</h6>
+              <h6 className='text-[12px] text-[#75716B] font-semibold'>-Author</h6>
               <h5 className='text-[24px] pb-[12px] font-bold
                             sm:-text[]'>Thompson P.</h5>
               <p className='text-[14px] text-[#75716B]
                             sm:text-[13px]
-                            lg:text-[16px]'>I am a pet enthusiast and freelance writer who specializes in animal behavior and care.
+                            lg:text-[16px] font-semibold'>I am a pet enthusiast and freelance writer who specializes in animal behavior and care.
                 With a deep love for cats, I enjoy sharing insights on feline companionship and wellness.<br/><br/>
                 When i’m not writing, I spends time volunteering at my local animal shelter, helping cats find loving homes
               </p>

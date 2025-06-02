@@ -1,10 +1,11 @@
 import { NotebookText,Folder,User,Bell,KeyRound,SquareArrowOutUpRight,LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
- function SideBar({pageNow}) {
+import { useAuth } from '@/context/Authcontext'; 
+function SideBar({pageNow}) {
     const styleSelectedMenu="px-6 py-3 h-15 bg-[#E4E0DA] font-medium text-[#43403B] text-lg flex items-center gap-3 cursor-pointer"
     const styleSelectableMenu ="px-6 py-3 <h-15></h-15> hover:bg-gray-200 font-medium text-[#75716B] text-lg flex items-center gap-3 cursor-pointer"
     const navigate = useNavigate()
-
+    const { logout } = useAuth();
     return (      
       <div className="h-screen w-[335px] bg-[#F6F5F3] flex flex-col justify-between py-4 fixed order-12 
                       ">
@@ -40,9 +41,9 @@ import { useNavigate } from 'react-router-dom';
         {/* Bottom section */}
         <div className="mb-4">
           <div className={`${styleSelectableMenu} border-b-1 border-[#DAD6D1]`} onClick={()=>navigate("/")}>
-          <SquareArrowOutUpRight size={18}/> Nantasit. website
+          <SquareArrowOutUpRight size={18}/> bb. website
           </div>
-          <div className={styleSelectableMenu}>
+          <div className={styleSelectableMenu} onClick={()=>{logout(); navigate("/");}}>
             <LogOut size={18} className="rotate-180"/> Log out
           </div>
         </div>

@@ -1,4 +1,5 @@
-import { LogIn,RotateCcw,UserRound,LogOut,Bell,ExternalLink,ChevronUp } from 'lucide-react';
+import { formatTimeAgo } from '@/utils/formatTimeAgo';
+import { LogIn,RotateCcw,UserRound,LogOut,Bell,ExternalLink,ChevronUp, Users } from 'lucide-react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,8 +10,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useAuth } from "@/context/Authcontext"; // Import useAuth อีกครั้งที่นี่
+import { axiosGetNotification, axiosGetNotificationAdmin, axiosPatchNotification } from '@/services/notification';
+import { Item } from '@radix-ui/react-dropdown-menu';
+
+
+const navigateToPost = async(id,post_id)=>{
+    await axiosPatchNotification(id)
+    window.location.href = `/post/${post_id}`;
+}
 
 function CurrentUser({ user }) {
     return (
@@ -30,24 +39,31 @@ function CurrentUser({ user }) {
     );
 }
 //-------------------------
-function CardNotification({ picture, username, Noti, over }) {
+function NotificationDropdown({notification, userId}) {
     return (
-        <div className="flex items-center p-4 cursor-pointer">
-            <img src={picture} alt="Profile" className="w-10 h-10 rounded-full mr-4" />
-            <div>
-                <p className="font-semibold">{username} {Noti}</p>
-                <p className="text-sm text-[#F2B68C]">{over}</p>
-            </div>
-        </div>
-    );
-}
-function NotificationDropdown({navigate}) {
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger><Bell className="cursor-pointer" size={20} /></DropdownMenuTrigger>
+        <DropdownMenu className="rounded-full">
+            <DropdownMenuTrigger className="rounded-full w-[48px] h-[48px] bg-[#FFFFFF] flex justify-center items-center">
+                <Bell className="cursor-pointer text-[#75716B]" size={20} />
+            </DropdownMenuTrigger>
             <DropdownMenuContent className="absolute w-[calc(100vw-32px)] transform -translate-x-[100%] mx-4  mt-4
-                                            sm:w-[362px] sm:mt-0">
-                {<CardNotification picture="d" username="dwdwdw" Noti="q" over="111111"/> }
+                                            sm:w-[362px] sm:mt-0 flex flex-col gap-2 max-h-[400px] pb-2">
+                {notification.filter(value=>value.is_read===false && value.sender_user_id !==userId)
+                             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                             .map((item,index)=>(
+                    <div className="flex items-center  px-4 py-2 cursor-pointer " key={index}
+                        onClick={()=>{navigateToPost(item.id,item.post_id)
+                        }}>
+                        <img src={item.image} alt="Profile" className="w-[48px] h-[48px] rounded-full mr-4" />
+                        <div className='h-[68px] '>
+                            <p className="font-bold">{item.name} <span className='text-[#75716B] font-semibold'>{
+                                item.type==="admin_posted"
+                                    ?"Published new article."
+                                    : item.type === "user_commented"? "Commented on your article." : "Comment on the article you have commented on."}</span></p>
+                            <p className="text-sm text-[#F2B68C] font-normal">{formatTimeAgo(item?.created_at)}</p>
+                        </div>
+                </div>
+                ))                
+                }
             </DropdownMenuContent>
         </DropdownMenu>
     );
@@ -84,11 +100,26 @@ function DropdownMenuItems({isAdmin,navigate,logout}) {
 //-----------------------
 function NavBar(){
     const { loggedIn,logout,user } = useAuth(); // ใช้ useContext ที่นี่
-    const isAdmin = user?.data?.role === "admin";
     const navigate = useNavigate()
+    const [dataNotification,setDataNotification]=useState([])
+    const [isAdmin,setIsAdmin]=useState(false)
+    useEffect(()=>{
+        async function fetchNotifucation(){
+            const isAdminTemp = user?.data?.role === "admin";
+            setIsAdmin(isAdminTemp)
+            let tempNotification;
+            if(isAdminTemp){tempNotification = await axiosGetNotificationAdmin();}
+            else{ tempNotification = await axiosGetNotification()}
+            console.log(tempNotification.data)
+            setDataNotification(tempNotification.data)
+        }
+        if(user){
+        fetchNotifucation()
+        }
+    },[user])
     return(
 
-   <nav className="w-full border-2 flex items-center justify-between py-4 px-8
+   <nav className="w-full border-2 flex items-center justify-between py-4 px-8 bg-[#F9F8F6]
                  lg:px-30">
         <h3 className="text-black font-gray-600 text-2xl sm:text-2xl lg:text-3xl cursor-pointer"
             onClick={()=>navigate("/")}
@@ -112,7 +143,7 @@ function NavBar(){
             <DropdownMenuContent className="w-screen mr-4 flex flex-col mt-4 sm:hidden">
                 <div className="p-4 flex justify-between">
                     <CurrentUser user={user}/>
-                    <NotificationDropdown navigate={navigate}/>
+                    <NotificationDropdown notification={dataNotification} userId={user?.data?.id}/>
                 </div>
 
                 <DropdownMenuItems isAdmin={isAdmin} navigate={navigate} logout={logout}/>
@@ -143,7 +174,7 @@ function NavBar(){
         (
             <div className='hidden
                             sm:flex  gap-8 '>
-                    <NotificationDropdown/>
+                    <NotificationDropdown notification={dataNotification} userId={user?.data?.id}/>
                     <DropdownMenu>
                         <DropdownMenuTrigger className='flex items-center cursor-pointer gap-4'>
                             <CurrentUser user={user}/><ChevronUp size={16} className="rotate-180"/>

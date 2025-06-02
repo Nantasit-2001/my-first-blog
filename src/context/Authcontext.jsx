@@ -1,20 +1,29 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { isAuthenticated } from "@/services/auth/auth.mjs";
 import { axiosGetUser } from "@/services/userService";
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null); 
+  const [loading, setLoading] = useState(true); // ✅ เพิ่ม loading
 
   useEffect(() => {
     const init = async () => {
       const auth = isAuthenticated();
       setLoggedIn(auth);
       if (auth) {
-        const userData = await axiosGetUser();
-        setUser(userData);
+        try {
+          const userData = await axiosGetUser();
+          setUser(userData);
+        } catch (err) {
+          console.error("Failed to fetch user:", err);
+          setUser(null);
+          setLoggedIn(false);
+        }
       }
+      setLoading(false); // ✅ โหลดเสร็จแล้ว
     };
     init();
   }, []);
@@ -33,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ loggedIn, user, loginWithToken, logout }}>
+    <AuthContext.Provider value={{ loggedIn, user, loading, loginWithToken, logout }}>
       {children}
     </AuthContext.Provider>
   );

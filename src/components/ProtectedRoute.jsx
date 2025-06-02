@@ -1,7 +1,10 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '@/context/Authcontext';
+import { Outlet } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
+
+export const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
 
   if (!token) {
@@ -11,4 +14,18 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-export default ProtectedRoute;
+
+export const ProtectedRouteAdmin = () => {
+  const { loggedIn, user, loading } = useAuth();
+
+  if (loading) {
+    return <div className="text-center mt-20 text-xl">Loading...</div>;
+  }
+  console.log(loading,!!user)
+  console.log(user,user?.data?.role)
+  if (!loggedIn || !user || user?.data?.role !== "admin") {
+    return <Navigate to="/AdminLoginPage" replace />;
+  }
+
+  return <Outlet />;
+};

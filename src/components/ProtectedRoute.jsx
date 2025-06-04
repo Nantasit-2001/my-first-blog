@@ -21,8 +21,6 @@ export const ProtectedRouteAdmin = () => {
   if (loading) {
     return <div className="text-center mt-20 text-xl">Loading...</div>;
   }
-  console.log(loading,!!user)
-  console.log(user,user?.data?.role)
   if (!loggedIn || !user || user?.data?.role !== "admin") {
     return <Navigate to="/AdminLoginPage" replace />;
   }

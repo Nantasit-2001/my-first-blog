@@ -29,7 +29,6 @@ function AdminResetPasswordPage (){
         try {
           setLoadingSend(true)
           setAlertResetPasswordState(false);
-          console.log(form.values.currentPassword,form.values.newPassword,"33--------------------")
           await axiosResetPassword({ currentPassword: form.values.currentPassword,newPassword: form.values.newPassword,});
           // navigate("/");
           showToast("bg-[#12B279]", "Reset Password", "Your password has been successfully updated");

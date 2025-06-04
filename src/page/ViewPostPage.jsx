@@ -33,6 +33,7 @@ function ViewPostPage() {
             try {
                 const postId=param.postId 
                 const response = await axiosfetchPostById({postId})
+                console.log(response.data.data)
                 setContent(response.data.data);
                 // setLike({...like})
             } catch (error) {

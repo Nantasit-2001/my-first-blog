@@ -45,6 +45,7 @@ function AdminCatergoryPage() {
 
   async function deleteData() {
     setAlertCategory(false);
+    console.log(valueCategory);
     await axiosDeleteCategory(valueCategory);
     setReface(!refacer);
   }

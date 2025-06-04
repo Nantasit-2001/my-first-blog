@@ -80,6 +80,7 @@ useEffect(() => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (!file) return;
+    console.log(file)
     const previewURL = URL.createObjectURL(file);
     {form.setErrors({...form.errors,image:""})}
     setPreview(previewURL);
@@ -101,6 +102,7 @@ useEffect(() => {
                 ...form.values,
                 category_id: selectedCategory ? selectedCategory.id : ""
             };
+            console.log(postArticle);
             await axiosPostArticle(postArticle, "draft");
             navigate('/AdminArticlePage');
             showToast("bg-[#12B279]", "Create article and saved as draft", "You can publish article later");
@@ -118,6 +120,7 @@ useEffect(() => {
                 ...form.values,
                 category_id: selectedCategory ? selectedCategory.id : ""
             };
+            console.log(postArticle);
             await axiosPostArticle(postArticle, "publish");
             navigate('/AdminArticlePage');
             showToast("bg-[#12B279]", "Create article and published", "You can see article in the list");

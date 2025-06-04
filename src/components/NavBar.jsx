@@ -110,6 +110,7 @@ function NavBar(){
             let tempNotification;
             if(isAdminTemp){tempNotification = await axiosGetNotificationAdmin();}
             else{ tempNotification = await axiosGetNotification()}
+            console.log(tempNotification.data)
             setDataNotification(tempNotification.data)
         }
         if(user){

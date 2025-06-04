@@ -54,6 +54,7 @@ async function changeProfile(e) {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (!file) return;
+    console.log(file)
     const previewURL = URL.createObjectURL(file);
     setPreview(previewURL);
 

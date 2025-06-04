@@ -11,5 +11,6 @@ export const axiosGetNotification = () => {
 };
 
 export const axiosPatchNotification = (id_notification) => {
+  console.log(id_notification)
   return API_Auth.patch(`${API_URL}/read`,{id_notification});
 };

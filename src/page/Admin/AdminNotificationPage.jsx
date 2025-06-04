@@ -12,6 +12,7 @@ function AdminNotificationPage (){
   useEffect(()=>{
     async function fetchNotifucation () {
         const dataNotificationTemp = await axiosGetNotificationAdmin()
+        console.log(dataNotificationTemp,"-=-=-=");
         setDataNotification(dataNotificationTemp.data)
     }
     fetchNotifucation()

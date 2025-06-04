@@ -1,8 +1,6 @@
 
-import axios from "axios";
 import API_Auth from "./auth/api.mjs";
 const API_URL = `${import.meta.env.VITE_API_URL}/posts`; // API URL
-
 // GET /posts?page=1&limit=6&category=xxx&keyword=xxx
 export const axiosFetchPosts = (params) => {
   return API_Auth.get(`${API_URL}?keyword=${params.keyword}&page=${params.page}&limit=${params.limit}&category=${params.category}`);

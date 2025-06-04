@@ -8,7 +8,6 @@ export const axiosgetCategory = () =>{
 }
 
 export const axiospostCategory = (category) =>{
-  console.log("category",category)
   return API_Auth.post(`${API_URL}`,{category})
 }
 

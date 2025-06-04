@@ -65,12 +65,11 @@ function ArticleSection (){
         limit: 6 
       };
       const response = await axiosFetchPosts(params);
-      console.log(response,"==========================")
       setDataBlogPost((prevPosts) => page === 1 ? response.data.posts : [...prevPosts, ...response.data.posts]);
       console.log(response.data)
       setHasMore(response.data.currentPage < response.data.totalPages);
     } catch (error) {
-      console.log("❌----" + error);
+      console.log("❌" + error);
     } finally {
       setIsLoading(false);
     }

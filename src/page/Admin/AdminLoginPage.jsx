@@ -31,7 +31,6 @@ function AdminLoginPage (){
     const res = await loginAdmin({ ...form.values });
     if (res?.token) {
       await loginWithToken(res.token);
-      console.log(loggedIn, user?.data?.role, loading )
       navigate("/AdminArticlePage");
     }
   } catch (err) {

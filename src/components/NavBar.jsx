@@ -40,6 +40,10 @@ function CurrentUser({ user }) {
 }
 //-------------------------
 function NotificationDropdown({notification, userId}) {
+    const filteredNotifications = notification
+        .filter(value => value.is_read === false && value.sender_user_id !== userId)
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
     return (
         <DropdownMenu className="rounded-full">
             <DropdownMenuTrigger className="rounded-full w-[48px] h-[48px] bg-[#FFFFFF] flex justify-center items-center">
@@ -47,23 +51,25 @@ function NotificationDropdown({notification, userId}) {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="absolute w-[calc(100vw-32px)] transform -translate-x-[100%] mx-4  mt-4
                                             sm:w-[362px] sm:mt-0 flex flex-col gap-2 max-h-[400px] pb-2">
-                {notification.filter(value=>value.is_read===false && value.sender_user_id !==userId)
-                             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                             .map((item,index)=>(
-                    <div className="flex items-center  px-4 py-2 cursor-pointer " key={index}
-                        onClick={()=>{navigateToPost(item.id,item.post_id)
-                        }}>
-                        <img src={item.image} alt="Profile" className="w-[48px] h-[48px] rounded-full mr-4" />
-                        <div className='h-[68px] '>
-                            <p className="font-bold">{item.name} <span className='text-[#75716B] font-semibold'>{
-                                item.type==="admin_posted"
-                                    ?"Published new article."
-                                    : item.type === "user_commented"? "Commented on your article." : "Comment on the article you have commented on."}</span></p>
-                            <p className="text-sm text-[#F2B68C] font-normal">{formatTimeAgo(item?.created_at)}</p>
+                {filteredNotifications.length === 0 ? (
+                    <div className="flex items-center justify-center px-4 py-6 text-[#75716B]">
+                        No new notifications
+                    </div>
+                ) : (
+                    filteredNotifications.map((item, index) => (
+                        <div className="flex items-center  px-4 py-2 cursor-pointer " key={index}
+                            onClick={() => { navigateToPost(item.id, item.post_id) }}>
+                            <img src={item.image} alt="Profile" className="w-[48px] h-[48px] rounded-full mr-4" />
+                            <div className='h-[68px] '>
+                                <p className="font-bold">{item.name} <span className='text-[#75716B] font-semibold'>{
+                                    item.type === "admin_posted"
+                                        ? "Published new article."
+                                        : item.type === "user_commented" ? "Commented on your article." : "Comment on the article you have commented on."}</span></p>
+                                <p className="text-sm text-[#F2B68C] font-normal">{formatTimeAgo(item?.created_at)}</p>
+                            </div>
                         </div>
-                </div>
-                ))                
-                }
+                    ))
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     );
@@ -109,7 +115,7 @@ function NavBar(){
             setIsAdmin(isAdminTemp)
             let tempNotification;
             if(isAdminTemp){tempNotification = await axiosGetNotificationAdmin();}
-            else{ tempNotification = await axiosGetNotification()}
+            else{ tempNotification = await axiosGetNotification(user.data.id)}
             setDataNotification(tempNotification.data)
         }
         if(user){

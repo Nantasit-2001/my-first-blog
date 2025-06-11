@@ -6,8 +6,9 @@ export const axiosGetNotificationAdmin = () => {
   return API_Auth.get(`${API_URL}/admin`);
 };
 
-export const axiosGetNotification = () => {
-  return API_Auth.get(`${API_URL}/user`);
+export const axiosGetNotification = (userid) => {
+  console.log(userid)
+  return API_Auth.get(`${API_URL}/user/${userid}`);
 };
 
 export const axiosPatchNotification = (id_notification) => {

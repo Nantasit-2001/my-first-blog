@@ -12,7 +12,7 @@ function SideBar({pageNow}) {
         {/* Top section */}
         <div>
           <div className="px-6 py-14">
-            <h1 className="text-4xl font-bold">Nantasit<span className="text-green-600">.</span></h1>
+            <h1 className="text-4xl font-bold">bb<span className="text-green-600">.</span></h1>
             <p className="text-xl font-medium text-[#F2B68C] mt-2">Admin panel</p>
           </div>
   
